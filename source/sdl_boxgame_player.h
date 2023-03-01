@@ -32,8 +32,57 @@ void move_down()
  player.rect.y+=pstep;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+/*checks the array of blocks for collision with player*/
+int player_touches_any_block()
+{
+ int i=0;
+ while(i<blocks_count)
+ {
+  if(SDL_HasIntersection(&player.rect, &blocks[i]))
+  {
+   return 1;
+   /*player=temp_player;*/
+   /*player.ystep=0;*/
+  }
+  i++;
+ }
+ 
+ return 0;
+}
+
+
+
+
+
+
+
+
 void player_update()
 {
+ temp_player=player; /*backup player in case we need to reset something*/  
+
+ /*update the x*/
+ player.rect.x+=player.xstep;
+ 
+ if(player_touches_any_block())
+ {
+  /*printf("Collision after x change!\n");*/
+  player.rect.x=temp_player.rect.x;
+ }
+
+ /*update the y depending on if we are currently jumping.*/
  if(player.jump_time!=0)
  {
   player.jump_time--;
@@ -43,4 +92,11 @@ void player_update()
  {
   player.rect.y+=player.ystep;
  }
+ 
+ if(player_touches_any_block())
+ {
+  /*printf("Collision after y change!\n");*/
+  player.rect.y=temp_player.rect.y;
+ }
+ 
 }

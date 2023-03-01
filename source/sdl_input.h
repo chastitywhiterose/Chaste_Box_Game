@@ -7,7 +7,10 @@ void keyboard()
  int key;
  SDL_PollEvent( &e );
   if( e.type == SDL_QUIT ){loop=0; printf("X clicked! This program will close!\n");}
-  if (e.type == SDL_KEYDOWN /*&& e.key.repeat==0*/ )
+  
+  
+  /*check key down events*/
+  if (e.type == SDL_KEYDOWN && e.key.repeat==0 )
   {
    key=e.key.keysym.sym;
 
@@ -28,23 +31,51 @@ void keyboard()
     break;
     case SDLK_LEFT:
     case SDLK_a:
-     move_left();
+     player.xstep=-1;
     break;
     case SDLK_RIGHT:
     case SDLK_d:
-     move_right();
+     player.xstep=1;
     break;
     
     case SDLK_SPACE:
      if(player.jump_time==0)
      {
-      player.jump_time=300;
+      player.jump_time=256;
      }
     break;
-    
+   }
+   
+  }
+  
+  
+  /*check key releases next*/
+  
+  
+  
+  if (e.type == SDL_KEYUP /*&& e.key.repeat==0*/ )
+  {
+   key=e.key.keysym.sym;
+
+   switch(key)
+   {
+    case SDLK_LEFT:
+    case SDLK_a:
+     player.xstep=0;
+    break;
+    case SDLK_RIGHT:
+    case SDLK_d:
+     player.xstep=0;
+    break;
     
    }
+   
   }
+  
+  
+  
+  
+  
 }
 
 

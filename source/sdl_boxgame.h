@@ -78,45 +78,25 @@ void boxgame_title()
 
 }
 
-int blocks_count=0; /*how many blocks there currently are*/
-SDL_Rect blocks[0x1000]; /*array of blocks which can be walls or other obstacles*/
 
-void add_block(int x,int y,int w,int h)
-{
- blocks[blocks_count].x=x;
- blocks[blocks_count].y=y;
- blocks[blocks_count].w=w;
- blocks[blocks_count].h=h;
- blocks_count++;
-}
 
 void level_1_rectangles()
 {
  blocks_count=0;
  
- add_block(rectsize*0,height-rectsize*8,rectsize*30,rectsize*1);
-
-}
-
-/*doubles as the function that draws the blocks but also checks collision*/
-void draw_blocks()
-{
- int i=0;
- while(i<blocks_count)
- {
-  SDL_FillRect(surface,&blocks[i],wall_color);
-  
-  if(SDL_HasIntersection(&player.rect, &blocks[i]))
-  {
-   /*printf("Collision!\n");*/
-   player=temp_player;
-   /*player.ystep=0;*/
-  }
-  
-  i++;
- }
+ add_block(rectsize*0,height-rectsize*1,rectsize*80,rectsize*1);
  
+ add_block(rectsize*0,rectsize*40,rectsize*41,rectsize*1);
+ 
+ add_block(rectsize*30,rectsize*30,rectsize,rectsize*10);
+ 
+  add_block(rectsize*40,rectsize*20,rectsize,rectsize*20);
+
+
 }
+
+
+
 
 /*
  The very first level. This is the start of it all.
@@ -138,7 +118,7 @@ void boxgame_level_1()
  player.rect.y=16*player.size;
  player.rect.w=player.size;
  player.rect.h=player.size;
- player.xstep=8;
+ player.xstep=0;
  player.ystep=1;
  player.jump_time=0;
  
@@ -160,9 +140,12 @@ void boxgame_level_1()
   /*sprintf(text,"Move the square with arrows.");
   chaste_font_draw_string_scaled(text,text_x,3*main_font.char_height*text_scale,4);*/
 
-  temp_player=player; /*backup player in case we need to reset it*/  
+  
   player_update();
+  
   draw_blocks(); /*draw and check collisions*/
+  
+  
   SDL_FillRect(surface,&player.rect,player.color);
   
   SDL_UpdateWindowSurface(window); /*update the screen*/

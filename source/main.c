@@ -12,7 +12,7 @@ SDL_Surface *surface;
 SDL_Event e;
 SDL_Rect rect;
 
-int wall_color;
+
 
 /*timing variables*/
 int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
@@ -24,6 +24,7 @@ int text_x; /*the x position of where text will go*/
 int text_scale; /*the current scale of the text used in some functions*/
 
 #include "sdl_chastefont.h"
+#include "sdl_boxes.h"
 #include "sdl_boxgame_player.h"
 #include "sdl_input.h"
 #include "sdl_boxgame.h"
