@@ -218,7 +218,7 @@ void boxgame_level_2()
 
   /*chaste_font_draw_string("This text is tiny. LOL",main_font.char_height*100,main_font.char_height*100);*/
   
-  chaste_font_draw_string_pixels("This text is tiny. LOL",main_font.char_height*100,main_font.char_height*100);
+  chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_height*100,main_font.char_height*100);
   
   player_update();
   

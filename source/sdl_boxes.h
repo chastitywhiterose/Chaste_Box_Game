@@ -35,16 +35,26 @@ void draw_blocks()
  this next function is kinda complicated
  It is an application of my font library but using direct pixel access instead of using SDL blitting functions.
  The purpose is for my learning only because it is not as fast as the official SDL way.
+ I may need this direct pixel access for a feature in my game.
+ 
+ Helpful reference for surfaces here:
+ https://wiki.libsdl.org/SDL2/SDL_PixelFormat
 */
 
 void chaste_font_draw_string_pixels(char *s,int cx,int cy)
 {
  int x,y,i,c,cx_start=cx;
  Uint32 *sp; /*sp is short for Surface Pointer in this example*/
+ int sx,sy,sx2,sy2 , dx,dy,dx2,dy2 ; /*I'll explain this later*/
  
  SDL_Rect rect_source,rect_dest;
  
  SDL_LockSurface(surface);
+
+/* 
+ printf("Surface Format: BitsPerPixel %d\n",surface->format->BitsPerPixel);
+ printf("Surface Format: BytesPerPixel %d\n",surface->format->BytesPerPixel);
+*/
  
  sp=(Uint32*)surface->pixels;
  
@@ -69,6 +79,29 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
    rect_dest=rect_source;
    rect_dest.x=cx;
    rect_dest.y=cy;
+   
+   /*now for the complicated stuff!*/
+   
+   sx2=rect_source.x+rect_source.w;
+   sy2=rect_source.y+rect_source.h;
+   
+   dx=rect_dest.x;
+   dy=rect_dest.y;
+   
+   sy=rect_source.y;
+   while(sy<sy2)
+   {
+    dx=rect_dest.x;
+    sx=rect_source.x;
+    while(sx<sx2)
+    {
+     sp[dx+dy*width]=0xFFFFFF;
+     sx++;
+     dx++;
+    }
+    sy++;
+    dy++;
+   }
 
    SDL_BlitSurface(main_font.surface,&rect_source,surface,&rect_dest);
    cx+=main_font.char_width;
