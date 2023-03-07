@@ -39,9 +39,13 @@ void keyboard()
     break;
     
     case SDLK_SPACE:
-     if(player.jump_time==0)
+     if(player_can_jump)
      {
-      player.jump_time=player_max_jump;
+      if(player.jump_time==0)
+      {
+       player.jump_time=player_max_jump;
+      }
+      player_can_jump=0;
      }
     break;
    }

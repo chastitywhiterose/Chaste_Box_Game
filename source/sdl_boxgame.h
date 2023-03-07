@@ -66,14 +66,21 @@ void boxgame_title()
 
   sprintf(text,"The game where everything is a rectangle!");
  chaste_font_draw_string_scaled(text,text_x,3*main_font.char_height*text_scale,4);
-   sprintf(text,"Press any key to begin!");
+   sprintf(text,"Press enter key to begin!");
  chaste_font_draw_string_scaled(text,text_x,4*main_font.char_height*text_scale,4);
 
  SDL_UpdateWindowSurface(window); /*update the screen*/
 
- while(e.type != SDL_KEYUP && e.type != SDL_QUIT) /*wait until any key is pressed and then released*/
+ loop=1;
+ while(loop)
  {
   SDL_PollEvent( &e );
+  if( e.type == SDL_QUIT ){loop=0;}
+  if(e.type == SDL_KEYUP)
+  {
+   if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
+   if(e.key.keysym.sym==SDLK_ESCAPE){loop=0;}
+  }
  }
 
 }
@@ -115,16 +122,7 @@ void boxgame_level_1()
  
  delay=1000/fps;
  
- /*set up the values of the player*/
- player.color=SDL_MapRGB(surface->format,255,255,0);
- player.size=rectsize;
- player.rect.x=8*player.size;
- player.rect.y=16*player.size;
- player.rect.w=player.size;
- player.rect.h=player.size;
- player.xstep=0;
- player.ystep=1;
- player.jump_time=0;
+ player_init(); /*must init player before starting level*/
  
  loop=1;
  while(loop) /*the beginning of the game loop*/

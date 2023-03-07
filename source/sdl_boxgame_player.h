@@ -10,8 +10,26 @@ struct box_player
 
 struct box_player player,temp_player;
 int player_max_jump=256;
+int player_can_jump=1;
 
 int pstep=1;
+
+/*set up default values for player at start of a level*/
+void player_init()
+{
+ /*set up the values of the player*/
+ player.color=SDL_MapRGB(surface->format,255,255,0);
+ player.size=16;
+ player.rect.x=4*player.size;
+ player.rect.y=4*player.size;
+ player.rect.w=player.size;
+ player.rect.h=player.size;
+ player.xstep=0;
+ player.ystep=1;
+ player.jump_time=0;
+ 
+ 
+}
 
 void move_left()
 {
@@ -101,6 +119,7 @@ void player_update()
  {
   /*printf("Collision after y change!\n");*/
   player.rect.y=temp_player.rect.y;
+  player_can_jump=1;
  }
  
 }

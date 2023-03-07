@@ -52,7 +52,7 @@ int main(int argc, char* args[])
  
  wall_color=SDL_MapRGB(surface->format,128,128,128);
 
- /*boxgame_title();*/
+ boxgame_title();
  boxgame_level_1();
 
 
