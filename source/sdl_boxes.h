@@ -44,11 +44,13 @@ void draw_blocks()
 void chaste_font_draw_string_pixels(char *s,int cx,int cy)
 {
  int x,y,i,c,cx_start=cx;
- Uint32 *sp; /*sp is short for Surface Pointer in this example*/
- int sx,sy,sx2,sy2 , dx,dy,dx2,dy2 ; /*I'll explain this later*/
+ Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
+ Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
+ int sx,sy,sx2,sy2,dx,dy; /*I'll explain this later*/
  
  SDL_Rect rect_source,rect_dest;
- 
+
+ SDL_LockSurface(main_font.surface);
  SDL_LockSurface(surface);
 
 /* 
@@ -56,10 +58,12 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  printf("Surface Format: BytesPerPixel %d\n",surface->format->BytesPerPixel);
 */
  
- sp=(Uint32*)surface->pixels;
+ ssp=(Uint32*)main_font.surface->pixels;
+ dsp=(Uint32*)surface->pixels;
+
  
  x=100;y=500;
- sp[x+y*width]=0xFFFFFF; /*test drawing a single white pixel*/
+ ssp[x+y*width]=0xFFFFFF; /*test drawing a single white pixel*/
   
  i=0;
  while(s[i]!=0)
@@ -95,7 +99,8 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
     sx=rect_source.x;
     while(sx<sx2)
     {
-     sp[dx+dy*width]=0xFFFFFF;
+     dsp[dx+dy*width]=ssp[sx+sy*width];
+   /*dsp[dx+dy*width]=0xFFFFFF;*/
      sx++;
      dx++;
     }
@@ -103,12 +108,14 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
     dy++;
    }
 
-   SDL_BlitSurface(main_font.surface,&rect_source,surface,&rect_dest);
+ /*end of really complicated section*/
+
    cx+=main_font.char_width;
   }
   i++;
  }
- 
+
+ SDL_UnlockSurface(main_font.surface);
  SDL_UnlockSurface(surface);
  
 }
