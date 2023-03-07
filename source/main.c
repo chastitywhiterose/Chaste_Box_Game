@@ -52,8 +52,9 @@ int main(int argc, char* args[])
  
  wall_color=SDL_MapRGB(surface->format,128,128,128);
 
- boxgame_title();
- boxgame_level_1();
+ /*boxgame_title();
+ boxgame_level_1();*/
+ boxgame_level_2();
 
 
  SDL_DestroyWindow(window);
