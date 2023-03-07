@@ -90,7 +90,11 @@ void level_1_rectangles()
  
  add_block(rectsize*30,rectsize*30,rectsize,rectsize*10);
  
-  add_block(rectsize*40,rectsize*20,rectsize,rectsize*20);
+ add_block(rectsize*40,rectsize*20,rectsize,rectsize*20);
+ 
+ add_block(rectsize*50,rectsize*20,rectsize*10,rectsize*1);
+
+ add_block(rectsize*60,rectsize*30,rectsize*10,rectsize*1);
 
 
 }
@@ -143,9 +147,8 @@ void boxgame_level_1()
   
   player_update();
   
-  draw_blocks(); /*draw and check collisions*/
-  
-  
+  draw_blocks(); /*draw walls*/
+    
   SDL_FillRect(surface,&player.rect,player.color);
   
   SDL_UpdateWindowSurface(window); /*update the screen*/

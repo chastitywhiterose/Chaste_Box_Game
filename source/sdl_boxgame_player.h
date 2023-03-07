@@ -9,6 +9,7 @@ struct box_player
 };
 
 struct box_player player,temp_player;
+int player_max_jump=256;
 
 int pstep=1;
 
@@ -81,6 +82,9 @@ void player_update()
   /*printf("Collision after x change!\n");*/
   player.rect.x=temp_player.rect.x;
  }
+ 
+ if(player.rect.x>=width){player.rect.x=0;}
+  if(player.rect.x<0){player.rect.x=width-player.rect.w;}
 
  /*update the y depending on if we are currently jumping.*/
  if(player.jump_time!=0)

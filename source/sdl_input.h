@@ -41,7 +41,7 @@ void keyboard()
     case SDLK_SPACE:
      if(player.jump_time==0)
      {
-      player.jump_time=256;
+      player.jump_time=player_max_jump;
      }
     break;
    }
