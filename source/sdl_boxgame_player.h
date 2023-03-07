@@ -31,6 +31,7 @@ void player_init()
  
 }
 
+/*
 void move_left()
 {
  player.rect.x-=player.xstep;
@@ -50,6 +51,7 @@ void move_down()
 {
  player.rect.y+=pstep;
 }
+*/
 
 
 
@@ -72,8 +74,6 @@ int player_touches_any_block()
   if(SDL_HasIntersection(&player.rect, &blocks[i]))
   {
    return 1;
-   /*player=temp_player;*/
-   /*player.ystep=0;*/
   }
   i++;
  }
@@ -101,7 +101,8 @@ void player_update()
   player.rect.x=temp_player.rect.x;
  }
  
- if(player.rect.x>=width){player.rect.x=0;}
+  /*if move horizontally off screem come back at other side*/
+  if(player.rect.x>=width){player.rect.x=0;}
   if(player.rect.x<0){player.rect.x=width-player.rect.w;}
 
  /*update the y depending on if we are currently jumping.*/
@@ -121,5 +122,10 @@ void player_update()
   player.rect.y=temp_player.rect.y;
   player_can_jump=1;
  }
+ 
+   /*if move vertically off screem come back at other side*/
+  if(player.rect.y>=height){player.rect.y=0;}
+  if(player.rect.y<0){player.rect.y=height-player.rect.w;}
+
  
 }

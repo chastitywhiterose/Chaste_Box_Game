@@ -169,13 +169,24 @@ void boxgame_level_1()
 
 
 
+void level_2_rectangles()
+{
+ blocks_count=0;
+ 
+ add_block(rectsize*0,height-rectsize*1,rectsize*80,rectsize*1);
+
+
+}
+
+
+
 
 /*
  The second level. I have no idea what kind of game I am making!
 */
 void boxgame_level_2()
 {
- level_1_rectangles();
+ level_2_rectangles();
 
  main_font=font_pico8;
  text_scale=16;
