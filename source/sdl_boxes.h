@@ -40,11 +40,17 @@ void draw_blocks()
 void chaste_font_draw_string_pixels(char *s,int cx,int cy)
 {
  int x,y,i,c,cx_start=cx;
+ Uint32 *sp; /*sp is short for Surface Pointer in this example*/
  
  SDL_Rect rect_source,rect_dest;
  
  SDL_LockSurface(surface);
  
+ sp=(Uint32*)surface->pixels;
+ 
+ x=100;y=500;
+ sp[x+y*width]=0xFFFFFF; /*test drawing a single white pixel*/
+  
  i=0;
  while(s[i]!=0)
  {
