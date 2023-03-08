@@ -57,10 +57,12 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
  Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
  int sx,sy,sx2,sy2,dx,dy; /*I'll explain this later*/
- 
+ Uint8 r,g,b; /*red green and blue for mapping colors*/
+ Uint32 pixel; /*pixel that will be read from*/
+ int source_surface_width;
  SDL_Rect rect_source,rect_dest;
 
-
+ source_surface_width=main_font.surface->w;
 
  SDL_LockSurface(main_font.surface);
  SDL_LockSurface(surface);
@@ -106,8 +108,18 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
     sx=rect_source.x;
     while(sx<sx2)
     {
-     /*dsp[dx+dy*width]=ssp[sx+sy*width];*/
-   dsp[dx+dy*width]=0xFFFFFF;
+     pixel=ssp[sx+sy*source_surface_width];
+     /*printf("0x%06X\n",ssp[sx+sy*width]);*/
+
+     if(pixel!=0)
+     {
+      /*get the correct pixel color*/
+      SDL_GetRGB(pixel,main_font.surface->format,&r,&g,&b);
+      dsp[dx+dy*width]=SDL_MapRGB(surface->format,r,g,b);
+      /*dsp[dx+dy*width]=pixel;*/
+      /*dsp[dx+dy*width]=0xFFFFFF;*/
+     }
+     
      sx++;
      dx++;
     }

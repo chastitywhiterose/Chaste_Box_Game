@@ -216,9 +216,9 @@ void boxgame_level_2()
   /*sprintf(text,"Move the square with arrows.");
   chaste_font_draw_string_scaled(text,text_x,3*main_font.char_height*text_scale,4);*/
 
-  /*chaste_font_draw_string("This text is tiny. LOL",main_font.char_height*100,main_font.char_height*100);*/
+  chaste_font_draw_string("Chastity White Rose",main_font.char_width*100,main_font.char_height*100);
   
-  chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_height*100,main_font.char_height*100);
+  chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);
   
   player_update();
   
