@@ -56,12 +56,11 @@ int main(int argc, char* args[])
  boxgame_level_1();*/
  boxgame_level_2();
 
+ SDL_FreeSurface(font_pico8.surface);
+ SDL_FreeSurface(font_8.surface);
 
  SDL_DestroyWindow(window);
  SDL_Quit();
-
- SDL_FreeSurface(font_pico8.surface);
- SDL_FreeSurface(font_8.surface);
 
  return 0;
 }

@@ -10,7 +10,8 @@ struct box_player
 
 struct box_player player,temp_player;
 int player_max_jump=256;
-int player_can_jump=1;
+int player_max_jumps=2;
+int player_jumps=2;
 
 int pstep=1;
 
@@ -120,7 +121,7 @@ void player_update()
  {
   /*printf("Collision after y change!\n");*/
   player.rect.y=temp_player.rect.y;
-  player_can_jump=1;
+  player_jumps=player_max_jumps;
  }
  
    /*if move vertically off screem come back at other side*/

@@ -50,13 +50,15 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  
  SDL_Rect rect_source,rect_dest;
 
+ printf("Source Surface Format: BitsPerPixel %d\n",main_font.surface->format->BitsPerPixel);
+ printf("Source Surface Format: BytesPerPixel %d\n",main_font.surface->format->BytesPerPixel);
+ 
+ printf("Dest Surface Format: BitsPerPixel %d\n",surface->format->BitsPerPixel);
+ printf("Dest Surface Format: BytesPerPixel %d\n",surface->format->BytesPerPixel);
+
+
  SDL_LockSurface(main_font.surface);
  SDL_LockSurface(surface);
-
-/* 
- printf("Surface Format: BitsPerPixel %d\n",surface->format->BitsPerPixel);
- printf("Surface Format: BytesPerPixel %d\n",surface->format->BytesPerPixel);
-*/
  
  ssp=(Uint32*)main_font.surface->pixels;
  dsp=(Uint32*)surface->pixels;

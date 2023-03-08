@@ -23,9 +23,14 @@ struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128,font_pico8;
 struct chaste_font chaste_font_load(char *s)
 {
  struct chaste_font new_font;
+ SDL_Surface *temp_surface;
  printf("Loading font: %s\n",s);
 
- new_font.surface=SDL_LoadBMP(s);
+ temp_surface=SDL_LoadBMP(s); /*load bitmap to temporary surface*/
+
+ new_font.surface=SDL_ConvertSurface(temp_surface, surface->format, 0);
+ 
+ SDL_FreeSurface(temp_surface); /*free the temp surface*/
 
  if(new_font.surface==NULL){printf( "SDL could not load image! SDL_Error: %s\n",SDL_GetError());return new_font;}
 
