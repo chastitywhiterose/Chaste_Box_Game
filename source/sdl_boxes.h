@@ -29,6 +29,16 @@ void draw_blocks()
 }
 
 
+/*this function tells me the formats of the current main font and the screen surface*/
+void check_surface_formats()
+{
+ printf("Source Surface Format: BitsPerPixel %d\n",main_font.surface->format->BitsPerPixel);
+ printf("Source Surface Format: BytesPerPixel %d\n",main_font.surface->format->BytesPerPixel);
+ 
+ printf("Dest Surface Format: BitsPerPixel %d\n",surface->format->BitsPerPixel);
+ printf("Dest Surface Format: BytesPerPixel %d\n",surface->format->BytesPerPixel);
+
+}
 
 
 /*
@@ -50,11 +60,6 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  
  SDL_Rect rect_source,rect_dest;
 
- printf("Source Surface Format: BitsPerPixel %d\n",main_font.surface->format->BitsPerPixel);
- printf("Source Surface Format: BytesPerPixel %d\n",main_font.surface->format->BytesPerPixel);
- 
- printf("Dest Surface Format: BitsPerPixel %d\n",surface->format->BitsPerPixel);
- printf("Dest Surface Format: BytesPerPixel %d\n",surface->format->BytesPerPixel);
 
 
  SDL_LockSurface(main_font.surface);
@@ -65,7 +70,7 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
 
  
  x=100;y=500;
- ssp[x+y*width]=0xFFFFFF; /*test drawing a single white pixel*/
+ dsp[x+y*width]=0xFFFFFF; /*test drawing a single white pixel*/
   
  i=0;
  while(s[i]!=0)
@@ -101,8 +106,8 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
     sx=rect_source.x;
     while(sx<sx2)
     {
-     dsp[dx+dy*width]=ssp[sx+sy*width];
-   /*dsp[dx+dy*width]=0xFFFFFF;*/
+     /*dsp[dx+dy*width]=ssp[sx+sy*width];*/
+   dsp[dx+dy*width]=0xFFFFFF;
      sx++;
      dx++;
     }
