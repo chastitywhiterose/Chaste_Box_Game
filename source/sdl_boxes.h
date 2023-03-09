@@ -71,8 +71,8 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  dsp=(Uint32*)surface->pixels;
 
  
- x=100;y=500;
- dsp[x+y*width]=0xFFFFFF; /*test drawing a single white pixel*/
+ /*x=100;y=500;
+ dsp[x+y*width]=0xFFFFFF;*/ /*test drawing a single white pixel*/
   
  i=0;
  while(s[i]!=0)
@@ -139,3 +139,102 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  
 }
 
+
+
+
+
+
+
+
+
+
+
+/*
+The scaled version of my font drawing function that uses direct pixel access
+*/
+
+void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
+{
+ int x,y,i,c,cx_start=cx;
+ Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
+ Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
+ int sx,sy,sx2,sy2,dx,dy; /*I'll explain this later*/
+ Uint8 r,g,b; /*red green and blue for mapping colors*/
+ Uint32 pixel; /*pixel that will be read from*/
+ int source_surface_width;
+ SDL_Rect rect_source,rect_dest;
+
+ source_surface_width=main_font.surface->w;
+
+ SDL_LockSurface(main_font.surface);
+ SDL_LockSurface(surface);
+ 
+ ssp=(Uint32*)main_font.surface->pixels;
+ dsp=(Uint32*)surface->pixels;
+  
+ i=0;
+ while(s[i]!=0)
+ {
+  c=s[i];
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height;}
+  else
+  {
+   x=(c-' ')*main_font.char_width;
+   y=0*main_font.char_height;
+
+   rect_source.x=x;
+   rect_source.y=y;
+   rect_source.w=main_font.char_width;
+   rect_source.h=main_font.char_height;
+
+   rect_dest=rect_source;
+   rect_dest.x=cx;
+   rect_dest.y=cy;
+   rect_dest.w=main_font.char_width*scale;
+   rect_dest.h=main_font.char_height*scale;
+   
+   /*now for the complicated stuff!*/
+   
+   sx2=rect_source.x+rect_source.w;
+   sy2=rect_source.y+rect_source.h;
+   
+   dx=rect_dest.x;
+   dy=rect_dest.y;
+   
+   sy=rect_source.y;
+   while(sy<sy2)
+   {
+    dx=rect_dest.x;
+    sx=rect_source.x;
+    while(sx<sx2)
+    {
+     pixel=ssp[sx+sy*source_surface_width];
+     /*printf("0x%06X\n",ssp[sx+sy*width]);*/
+
+     if(pixel!=0)
+     {
+      /*get the correct pixel color*/
+      SDL_GetRGB(pixel,main_font.surface->format,&r,&g,&b);
+      dsp[dx+dy*width]=SDL_MapRGB(surface->format,r,g,b);
+      /*dsp[dx+dy*width]=pixel;*/
+      /*dsp[dx+dy*width]=0xFFFFFF;*/
+     }
+     
+     sx++;
+     dx++;
+    }
+    sy++;
+    dy++;
+   }
+
+ /*end of really complicated section*/
+
+   cx+=main_font.char_width*scale;
+  }
+  i++;
+ }
+
+ SDL_UnlockSurface(main_font.surface);
+ SDL_UnlockSurface(surface);
+ 
+}

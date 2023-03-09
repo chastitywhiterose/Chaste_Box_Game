@@ -21,8 +21,8 @@ void player_init()
  /*set up the values of the player*/
  player.color=SDL_MapRGB(surface->format,255,255,0);
  player.size=16;
- player.rect.x=4*player.size;
- player.rect.y=4*player.size;
+ player.rect.x=1*player.size;
+ player.rect.y=30*player.size;
  player.rect.w=player.size;
  player.rect.h=player.size;
  player.xstep=0;

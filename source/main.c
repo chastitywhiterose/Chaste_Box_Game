@@ -51,6 +51,8 @@ int main(int argc, char* args[])
  player.size=rectsize; /*set same player size as checker grid*/
  
  wall_color=SDL_MapRGB(surface->format,128,128,128);
+ 
+ fps=360; /*change the speed AKA Frames Per Second */
 
  /*boxgame_title();
  boxgame_level_1();*/
