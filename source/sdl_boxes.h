@@ -203,44 +203,54 @@ void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
    
    dx=rect_dest.x;
    dy=rect_dest.y;
-  
-   dx2=rect_dest.x+rect_dest.w;
-   dy2=rect_dest.y+rect_dest.h;
    
-
    sy=rect_source.y;
    while(sy<sy2)
    {
-    
+    dx=rect_dest.x;
     sx=rect_source.x;
     while(sx<sx2)
     {
      pixel=ssp[sx+sy*source_surface_width];
-
+ 
      if(pixel!=0)
      {
-     
+      /*dsp[dx+dy*width]=0xFFFFFF;*/
+      
+      /*don't just draw one pixel but rather an entire rectangle*/
+      
       dy=rect_dest.y;
       dy2=dy+scale;
       while(dy<dy2)
       {
+      
        dx=rect_dest.x;
-       dy2=dy+scale;
+       dx2=dx+scale;
        while(dx<dx2)
        {
-        /*dsp[dx+dy*width]=pixel;*/
+        dsp[dx+dy*width]=0xFFFFFF;
         dx++;
        }
+      
        dy++;
       }
- 
+      
+      /*rect_dest.x+=rect_dest.w;*/
+      /*rect_dest.y+=rect_dest.h;*/
+      
+      
      }
      
      sx++;
+     dx++;
      
     }
     sy++;
+    dy++;
+    
+
    }
+
 
  /*end of really complicated section*/
 
