@@ -150,7 +150,10 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
 
 
 /*
-The scaled version of my font drawing function that uses direct pixel access
+ The scaled version of my font drawing function that uses direct pixel access
+ For the sake of efficiency, it does not check to see if the source(main_font.surface) and destination(screen)
+ are of the same type. My font library has been updated to make sure they are when loading the font from the file.
+ This makes SDL_GetRGB and SDL_MapRGB useless and they have been removed to speed up things by removing function calls.
 */
 
 void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
@@ -158,8 +161,7 @@ void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
  int x,y,i,c,cx_start=cx;
  Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
  Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
- int sx,sy,sx2,sy2,dx,dy; /*I'll explain this later*/
- Uint8 r,g,b; /*red green and blue for mapping colors*/
+ int sx,sy,sx2,sy2,dx,dy,dx2,dy2; /*x,y coordinates for both source and destination*/
  Uint32 pixel; /*pixel that will be read from*/
  int source_surface_width;
  SDL_Rect rect_source,rect_dest;
@@ -182,49 +184,62 @@ void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
    x=(c-' ')*main_font.char_width;
    y=0*main_font.char_height;
 
+   /*set up source rectangle where this character will be copied from*/
    rect_source.x=x;
    rect_source.y=y;
    rect_source.w=main_font.char_width;
    rect_source.h=main_font.char_height;
 
-   rect_dest=rect_source;
+   /*set up destination rectangle where this character will be drawn to*/
    rect_dest.x=cx;
    rect_dest.y=cy;
    rect_dest.w=main_font.char_width*scale;
    rect_dest.h=main_font.char_height*scale;
    
-   /*now for the complicated stuff!*/
+   /*Now for the ultra complicated stuff that only Chastity can read and understand!*/
    
    sx2=rect_source.x+rect_source.w;
    sy2=rect_source.y+rect_source.h;
    
    dx=rect_dest.x;
    dy=rect_dest.y;
+  
+   dx2=rect_dest.x+rect_dest.w;
+   dy2=rect_dest.y+rect_dest.h;
    
+
    sy=rect_source.y;
    while(sy<sy2)
    {
-    dx=rect_dest.x;
+    
     sx=rect_source.x;
     while(sx<sx2)
     {
      pixel=ssp[sx+sy*source_surface_width];
-     /*printf("0x%06X\n",ssp[sx+sy*width]);*/
 
      if(pixel!=0)
      {
-      /*get the correct pixel color*/
-      SDL_GetRGB(pixel,main_font.surface->format,&r,&g,&b);
-      dsp[dx+dy*width]=SDL_MapRGB(surface->format,r,g,b);
-      /*dsp[dx+dy*width]=pixel;*/
-      /*dsp[dx+dy*width]=0xFFFFFF;*/
+     
+      dy=rect_dest.y;
+      dy2=dy+scale;
+      while(dy<dy2)
+      {
+       dx=rect_dest.x;
+       dy2=dy+scale;
+       while(dx<dx2)
+       {
+        /*dsp[dx+dy*width]=pixel;*/
+        dx++;
+       }
+       dy++;
+      }
+ 
      }
      
      sx++;
-     dx++;
+     
     }
     sy++;
-    dy++;
    }
 
  /*end of really complicated section*/
