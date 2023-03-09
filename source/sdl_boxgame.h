@@ -220,7 +220,7 @@ void boxgame_level_2()
   
   chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);
   
-  chaste_font_draw_string_pixels_scaled("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,10);
+  chaste_font_draw_string_pixels_scaled("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,16,0x00FF00);
   
   player_update();
   

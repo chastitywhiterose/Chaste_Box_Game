@@ -156,12 +156,12 @@ void chaste_font_draw_string_pixels(char *s,int cx,int cy)
  This makes SDL_GetRGB and SDL_MapRGB useless and they have been removed to speed up things by removing function calls.
 */
 
-void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
+void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale,int color)
 {
  int x,y,i,c,cx_start=cx;
  Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
  Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
- int sx,sy,sx2,sy2,dx,dy,dx2,dy2; /*x,y coordinates for both source and destination*/
+ int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
  Uint32 pixel; /*pixel that will be read from*/
  int source_surface_width;
  SDL_Rect rect_source,rect_dest;
@@ -193,8 +193,6 @@ void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
    /*set up destination rectangle where this character will be drawn to*/
    rect_dest.x=cx;
    rect_dest.y=cy;
-   rect_dest.w=main_font.char_width*scale;
-   rect_dest.h=main_font.char_height*scale;
    
    /*Now for the ultra complicated stuff that only Chastity can read and understand!*/
    
@@ -215,44 +213,46 @@ void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale)
  
      if(pixel!=0)
      {
-      /*dsp[dx+dy*width]=0xFFFFFF;*/
+      int tx,ty,tx2,ty2; /*temp variables only for the rectangle*/
       
       /*don't just draw one pixel but rather an entire rectangle*/
       
-      dy=rect_dest.y;
-      dy2=dy+scale;
-      while(dy<dy2)
+      ty2=dy+scale;
+      
+      /*beginning of rectangle*/      
+      ty=dy;
+      while(ty<ty2)
       {
       
-       dx=rect_dest.x;
-       dx2=dx+scale;
-       while(dx<dx2)
+       tx=dx;
+       tx2=dx+scale;
+       while(tx<tx2)
        {
-        dsp[dx+dy*width]=0xFFFFFF;
-        dx++;
+        dsp[tx+ty*width]=color;
+        tx++;
        }
       
-       dy++;
+       ty++;
       }
-      
-      /*rect_dest.x+=rect_dest.w;*/
-      /*rect_dest.y+=rect_dest.h;*/
+      /*end of rectangle*/
       
       
      }
      
+     
      sx++;
-     dx++;
+     dx+=scale;
      
     }
+    
     sy++;
-    dy++;
+    dy+=scale;
     
 
    }
 
 
- /*end of really complicated section*/
+   /*End of really complicated section*/
 
    cx+=main_font.char_width*scale;
   }
