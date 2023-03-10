@@ -24,6 +24,7 @@ int text_x; /*the x position of where text will go*/
 int text_scale; /*the current scale of the text used in some functions*/
 
 #include "sdl_chastefont.h"
+#include "chaste_the_rainbow.h"
 #include "sdl_boxes.h"
 #include "sdl_boxgame_player.h"
 #include "sdl_input.h"
@@ -53,6 +54,11 @@ int main(int argc, char* args[])
  wall_color=SDL_MapRGB(surface->format,128,128,128);
  
  fps=360; /*change the speed AKA Frames Per Second */
+ 
+
+ /*bbm_palette_rainbow(6);*/
+ chaste_palette_make(6);
+ chaste_palette_view();
 
  /*boxgame_title();
  boxgame_level_1();*/
