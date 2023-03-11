@@ -22,7 +22,7 @@ void player_init()
  player.color=SDL_MapRGB(surface->format,255,255,0);
  player.size=16;
  player.rect.x=1*player.size;
- player.rect.y=30*player.size;
+ player.rect.y=height-player.size*2;
  player.rect.w=player.size;
  player.rect.h=player.size;
  player.xstep=0;
@@ -103,8 +103,8 @@ void player_update()
  }
  
   /*if move horizontally off screem come back at other side*/
-  if(player.rect.x>=width){player.rect.x=0;}
-  if(player.rect.x<0){player.rect.x=width-player.rect.w;}
+  if(player.rect.x>=width){player.rect.x=0; game_level++; loop=0;}
+  if(player.rect.x<0){player.rect.x=width-player.rect.w; game_level--; loop=0;}
 
  /*update the y depending on if we are currently jumping.*/
  if(player.jump_time!=0)

@@ -12,7 +12,7 @@ SDL_Surface *surface;
 SDL_Event e;
 SDL_Rect rect;
 
-
+int game_level=0;
 
 /*timing variables*/
 int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
@@ -59,9 +59,18 @@ int main(int argc, char* args[])
  chaste_palette_rainbow(255);
  /*chaste_palette_view();*/
 
- /*boxgame_title();*/
- boxgame_level_1();
- boxgame_level_2();
+ game_level=0;
+ if(game_level==0){boxgame_title();}
+
+ game_level=1;
+
+ while(game_level!=0)
+ {
+  if(game_level==1){boxgame_level_1();}
+  else if(game_level==2){boxgame_level_2();}
+  else if(game_level==3){boxgame_level_3();}
+  else {break;}
+ }
 
  SDL_FreeSurface(font_pico8.surface);
  SDL_FreeSurface(font_8.surface);

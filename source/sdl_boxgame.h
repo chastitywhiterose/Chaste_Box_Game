@@ -257,3 +257,80 @@ void boxgame_level_2()
 
 
 
+
+
+
+
+/*
+ The second level. I have no idea what kind of game I am making!
+*/
+void boxgame_level_3()
+{
+ level_2_rectangles();
+
+ main_font=font_pico8;
+ text_scale=16;
+ text_x=2*main_font.char_width*text_scale;
+ 
+ delay=1000/fps;
+ 
+ player_init(); /*must init player before starting level*/
+ 
+ wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
+
+
+ 
+ loop=1;
+ while(loop) /*the beginning of the game loop*/
+ {
+  time = SDL_GetTicks();
+  time1 = time+delay;
+  
+  SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
+  
+  /*chaste_checker();*/
+ 
+
+  /*sprintf(text,"Level 3");*/
+  /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
+  /*chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);*/
+
+/*  sprintf(text,"This game programmed by");
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*40,4);*/
+
+  /*chaste_font_draw_string("Chastity White Rose",main_font.char_width*100,main_font.char_height*100);*/
+  
+  /*chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);*/
+  
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_pixels_scaled("Chaste the Rainbow",main_font.char_width*10,main_font.char_height*50,16,0x00FF00);
+
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
+ 
+  player_update();
+  
+  draw_blocks(); /*draw walls*/
+    
+  SDL_FillRect(surface,&player.rect,player.color);
+  
+  SDL_UpdateWindowSurface(window); /*update the screen*/
+  
+
+  keyboard();
+  
+  /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
+  while(time<time1)
+  {
+   time=SDL_GetTicks();
+   /*time=time1;*/
+  }
+  
+ }
+
+}
+
+

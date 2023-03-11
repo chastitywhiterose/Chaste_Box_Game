@@ -18,6 +18,7 @@ void keyboard()
    {
     case SDLK_ESCAPE:
     loop=0;
+    game_level=0;
     break;
     
     /*the main 4 directions*/
