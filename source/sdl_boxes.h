@@ -390,3 +390,123 @@ void chaste_font_draw_string_pixels_scaled_rainbow(char *s,int cx,int cy,int sca
  
 }
 
+
+
+
+
+
+
+
+
+/*
+this function does not actually draw text to the screen, but it does add a list of rectangles to a level that will produce the same effect
+*/
+
+void chaste_font_draw_string_pixels_scaled_add_boxes(char *s,int cx,int cy,int scale)
+{
+ int x,y,i,c,cx_start=cx;
+ Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
+ Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
+ int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
+ Uint32 pixel; /*pixel that will be read from*/
+ int source_surface_width;
+ SDL_Rect rect_source,rect_dest;
+
+ source_surface_width=main_font.surface->w;
+
+ SDL_LockSurface(main_font.surface);
+ SDL_LockSurface(surface);
+ 
+ ssp=(Uint32*)main_font.surface->pixels;
+ dsp=(Uint32*)surface->pixels;
+  
+ i=0;
+ while(s[i]!=0)
+ {
+  c=s[i];
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height*scale;}
+  else
+  {
+   x=(c-' ')*main_font.char_width;
+   y=0*main_font.char_height;
+
+   /*set up source rectangle where this character will be copied from*/
+   rect_source.x=x;
+   rect_source.y=y;
+   rect_source.w=main_font.char_width;
+   rect_source.h=main_font.char_height;
+
+   /*set up destination rectangle where this character will be drawn to*/
+   rect_dest.x=cx;
+   rect_dest.y=cy;
+   
+   /*Now for the ultra complicated stuff that only Chastity can read and understand!*/
+   
+   sx2=rect_source.x+rect_source.w;
+   sy2=rect_source.y+rect_source.h;
+   
+   dx=rect_dest.x;
+   dy=rect_dest.y;
+   
+   sy=rect_source.y;
+   while(sy<sy2)
+   {
+    dx=rect_dest.x;
+    sx=rect_source.x;
+    while(sx<sx2)
+    {
+     pixel=ssp[sx+sy*source_surface_width];
+ 
+     if(pixel!=0)
+     {
+      int tx,ty,tx2,ty2; /*temp variables only for the rectangle*/
+      
+      /*don't just draw one pixel but rather an entire rectangle*/
+      
+      /*add_block(dx,dy,main_font.char_width*scale,main_font.char_height*scale);*/
+      
+      ty2=dy+scale;
+      
+      /*beginning of rectangle*/      
+      ty=dy;
+      while(ty<ty2)
+      {
+       tx=dx;
+       tx2=dx+scale;
+       while(tx<tx2)
+       {
+        /*dsp[tx+ty*width]=0xFF;*/
+        tx++;
+       }
+       ty++;
+      }
+      /*end of rectangle*/
+      
+      
+     }
+     
+     
+     sx++;
+     dx+=scale;
+     
+    }
+    
+    sy++;
+    dy+=scale;
+    
+
+   }
+
+
+   /*End of really complicated section*/
+
+   cx+=main_font.char_width*scale;
+  }
+  i++;
+ }
+
+ SDL_UnlockSurface(main_font.surface);
+ SDL_UnlockSurface(surface);
+ 
+}
+
