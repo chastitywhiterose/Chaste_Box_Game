@@ -55,13 +55,12 @@ int main(int argc, char* args[])
  
  fps=360; /*change the speed AKA Frames Per Second */
  
+ /*load the rainbow colors!*/
+ chaste_palette_rainbow(255);
+ /*chaste_palette_view();*/
 
- /*bbm_palette_rainbow(6);*/
- chaste_palette_make(6);
- chaste_palette_view();
-
- /*boxgame_title();
- boxgame_level_1();*/
+ /*boxgame_title();*/
+ boxgame_level_1();
  boxgame_level_2();
 
  SDL_FreeSurface(font_pico8.surface);

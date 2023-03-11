@@ -139,8 +139,10 @@ void boxgame_level_1()
   /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
   chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
 
-  /*sprintf(text,"Move the square with arrows.");
-  chaste_font_draw_string_scaled(text,text_x,3*main_font.char_height*text_scale,4);*/
+  sprintf(text,"Move the square with arrows");
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*35,4);
+  sprintf(text,"Space bar to jump");
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*40,4);
 
   
   player_update();
@@ -157,8 +159,8 @@ void boxgame_level_1()
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(time<time1)
   {
-   /*time=SDL_GetTicks();*/
-   time=time1;
+   time=SDL_GetTicks();
+   /*time=time1;*/
   }
   
  }
@@ -197,6 +199,8 @@ void boxgame_level_2()
  player_init(); /*must init player before starting level*/
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
+
+
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -213,15 +217,22 @@ void boxgame_level_2()
   /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
   chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
 
-  /*sprintf(text,"Move the square with arrows.");
-  chaste_font_draw_string_scaled(text,text_x,3*main_font.char_height*text_scale,4);*/
+  sprintf(text,"This game programmed by");
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*40,4);
 
-  chaste_font_draw_string("Chastity White Rose",main_font.char_width*100,main_font.char_height*100);
+  /*chaste_font_draw_string("Chastity White Rose",main_font.char_width*100,main_font.char_height*100);*/
   
-  chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);
+  /*chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);*/
   
+  chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_pixels_scaled("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,16,0x00FF00);
-  
+
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
+ 
   player_update();
   
   draw_blocks(); /*draw walls*/

@@ -5,24 +5,27 @@ Header file for creating global color palette. The main idea is to create beauti
 #define chaste_palette_max 0x1000000
 
 /*global variables to be used to store the colors and how many there are*/
-uint32_t chaste_palette[chaste_palette_max],chaste_palette_length=0,chaste_palette_index;
+int chaste_palette[chaste_palette_max],chaste_palette_length=0,chaste_palette_index=0,chaste_palette_index1=0;
 
 void chaste_next_color()
 {
  chaste_palette_index++;
  if(chaste_palette_index>=chaste_palette_length)
  {
-  chaste_palette_index-=chaste_palette_length;
+  chaste_palette_index=0;
  }
+/* printf("chaste_palette_index=%d\n",chaste_palette_index);
+ printf("color=%06X;\n",chaste_palette[chaste_palette_index]);*/
 }
 
 void chaste_prev_color()
 {
  chaste_palette_index--;
- if(chaste_palette_index<0)
+ if(chaste_palette_index<=0)
  {
-  chaste_palette_index+=chaste_palette_length;
+  chaste_palette_index=chaste_palette_length-1;
  }
+ /*printf("chaste_palette_index=%d\n",chaste_palette_index);*/
 }
 
 
@@ -39,7 +42,7 @@ void chaste_palette_view()
 
 
 /*
- This function was copied from a very old project known as CK3D. It attempts to make a rainbow using the integer n passed to it using degrees of red,green,blue.
+ This function attempts to make a rainbow using the integer n passed to it using degrees of red,green,blue.
  It seems that the number of colors is equal to 6*n. This means that if n is 20, you get 6*20==120;
  The max value n can be is 255 which gives 1530 colors! However my favorite is n=40 because 240 colors is really convenient for fitting under the 256 color gif limit.
 */
@@ -85,6 +88,7 @@ void chaste_palette_rainbow(int n)
   blue--; 
  }
  chaste_palette_length=x;
+ chaste_palette_index=0;
 }
 
 /*a function for testing how many colors are created with my rainbow function*/
@@ -99,7 +103,9 @@ void chaste_palette_rainbow_test(int n)
 
 
 /*
-A function to set up the global palette for my other needs according to the bpp that I have predefined to be valid. A very bbm specific system I made.
+ A function to set up the global palette for my other needs according to the bpp that I have predefined to be valid.
+ It basically makes a list of every color possible within a system with 1,2,4,8 bits for gray scale or 3,6,12 bits for full color
+ This could be used for something in the future although I am not sure what yet!
 */
 void chaste_palette_make(int bpp)
 {

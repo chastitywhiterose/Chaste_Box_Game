@@ -228,9 +228,11 @@ void chaste_font_draw_string_pixels_scaled(char *s,int cx,int cy,int scale,int c
        tx2=dx+scale;
        while(tx<tx2)
        {
-        dsp[tx+ty*width]=color;
+        /*dsp[tx+ty*width]=color;*/
+        dsp[tx+ty*width]=chaste_palette[chaste_palette_index];
         tx++;
        }
+       chaste_next_color();
       
        ty++;
       }
