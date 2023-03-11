@@ -22,10 +22,7 @@ void keyboard()
     break;
     
     /*the main 4 directions*/
-    case SDLK_UP:
-    case SDLK_w:
-     /*move_up();*/
-    break;
+
     case SDLK_DOWN:
     case SDLK_s:
      /*move_down();*/
@@ -39,6 +36,8 @@ void keyboard()
      player.xstep=1;
     break;
     
+    case SDLK_UP:
+    case SDLK_w:
     case SDLK_SPACE:
      if(player_jumps)
      {

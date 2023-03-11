@@ -51,7 +51,7 @@ int main(int argc, char* args[])
  checker_init(); /*set up initial checkerboard values*/
  player.size=rectsize; /*set same player size as checker grid*/
  
- wall_color=SDL_MapRGB(surface->format,128,128,128);
+ wall_color=SDL_MapRGB(surface->format,255,255,255);
  
  fps=360; /*change the speed AKA Frames Per Second */
  
@@ -59,10 +59,12 @@ int main(int argc, char* args[])
  chaste_palette_rainbow(255);
  /*chaste_palette_view();*/
 
- game_level=0;
- if(game_level==0){boxgame_title();}
-
  game_level=1;
+ if(game_level==0){boxgame_title();}
+ 
+ player_init(); /*must init player before starting levels*/
+
+ game_level=2;
 
  while(game_level!=0)
  {

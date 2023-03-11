@@ -91,7 +91,10 @@ void level_1_rectangles()
 {
  blocks_count=0;
  
- add_block(rectsize*0,height-rectsize*1,rectsize*80,rectsize*1);
+ add_block(rectsize*0,height-rectsize*1,rectsize*80,rectsize*1); /*bottom floor*/
+ 
+ add_block(rectsize*0,rectsize*0,rectsize*1,rectsize*44); /*bottom floor*/
+
  
  add_block(rectsize*0,rectsize*40,rectsize*41,rectsize*1);
  
@@ -122,7 +125,7 @@ void boxgame_level_1()
  
  delay=1000/fps;
  
- player_init(); /*must init player before starting level*/
+ 
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -135,7 +138,7 @@ void boxgame_level_1()
   /*chaste_checker();*/
  
 
-  sprintf(text,"Level 1");
+  sprintf(text,"Level %d",game_level);
   /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
   chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
 
@@ -196,7 +199,7 @@ void boxgame_level_2()
  
  delay=1000/fps;
  
- player_init(); /*must init player before starting level*/
+
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
@@ -213,7 +216,7 @@ void boxgame_level_2()
   /*chaste_checker();*/
  
 
-  sprintf(text,"Level 2");
+  sprintf(text,"Level %d",game_level);
   /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
   chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
 
@@ -225,7 +228,7 @@ void boxgame_level_2()
   /*chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);*/
   
   chaste_palette_index=chaste_palette_index1;
-  chaste_font_draw_string_pixels_scaled("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,16,0x00FF00);
+  chaste_font_draw_string_pixels_scaled_rainbow("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,16);
 
   chaste_palette_index1++;
   if(chaste_palette_index1>=chaste_palette_length)
@@ -274,7 +277,6 @@ void boxgame_level_3()
  
  delay=1000/fps;
  
- player_init(); /*must init player before starting level*/
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
@@ -291,9 +293,8 @@ void boxgame_level_3()
   /*chaste_checker();*/
  
 
-  /*sprintf(text,"Level 3");*/
-  /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
-  /*chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);*/
+  sprintf(text,"Level %d",game_level);
+  chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
 
 /*  sprintf(text,"This game programmed by");
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*40,4);*/
@@ -303,7 +304,7 @@ void boxgame_level_3()
   /*chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);*/
   
   chaste_palette_index=chaste_palette_index1;
-  chaste_font_draw_string_pixels_scaled("Chaste the Rainbow",main_font.char_width*10,main_font.char_height*50,16,0x00FF00);
+  chaste_font_draw_string_pixels_scaled_rainbow("Chaste the Rainbow",main_font.char_width*10,main_font.char_height*50,16);
 
   chaste_palette_index1++;
   if(chaste_palette_index1>=chaste_palette_length)

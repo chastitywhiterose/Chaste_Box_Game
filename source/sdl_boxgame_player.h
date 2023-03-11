@@ -126,7 +126,7 @@ void player_update()
  
    /*if move vertically off screem come back at other side*/
   if(player.rect.y>=height){player.rect.y=0;}
-  if(player.rect.y<0){player.rect.y=height-player.rect.w;}
+  /*if(player.rect.y<0){player.rect.y=height-player.rect.w;}*/
 
  
 }
