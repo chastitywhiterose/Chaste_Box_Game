@@ -65,7 +65,7 @@ int main(int argc, char* args[])
  
  player_init(); /*must init player before starting levels*/
 
- game_level=3; /*level to start on. this makes for easier testing of my levels*/
+ game_level=6; /*level to start on. this makes for easier testing of my levels*/
 
  while(game_level!=0)
  {
@@ -74,6 +74,7 @@ int main(int argc, char* args[])
   else if(game_level==3){boxgame_level_3();}
   else if(game_level==4){boxgame_level_4();}
   else if(game_level==5){boxgame_level_5();}
+  else if(game_level==6){boxgame_level_6();}
   else {break;}
  }
 
