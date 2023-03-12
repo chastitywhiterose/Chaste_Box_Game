@@ -400,13 +400,14 @@ void chaste_font_draw_string_pixels_scaled_rainbow(char *s,int cx,int cy,int sca
 
 /*
 this function does not actually draw text to the screen, but it does add a list of rectangles to a level that will produce the same effect
+it cannot be called during the game loop but only just before it after the font is already selected.
+Because it never actually draws to the screen by itself, some variables are removed because they are never used.
 */
 
 void chaste_font_draw_string_pixels_scaled_add_boxes(char *s,int cx,int cy,int scale)
 {
  int x,y,i,c,cx_start=cx;
  Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
- Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
  int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
  Uint32 pixel; /*pixel that will be read from*/
  int source_surface_width;
@@ -415,10 +416,8 @@ void chaste_font_draw_string_pixels_scaled_add_boxes(char *s,int cx,int cy,int s
  source_surface_width=main_font.surface->w;
 
  SDL_LockSurface(main_font.surface);
- SDL_LockSurface(surface);
  
  ssp=(Uint32*)main_font.surface->pixels;
- dsp=(Uint32*)surface->pixels;
   
  i=0;
  while(s[i]!=0)
@@ -456,48 +455,17 @@ void chaste_font_draw_string_pixels_scaled_add_boxes(char *s,int cx,int cy,int s
     while(sx<sx2)
     {
      pixel=ssp[sx+sy*source_surface_width];
- 
      if(pixel!=0)
      {
-      int tx,ty,tx2,ty2; /*temp variables only for the rectangle*/
-      
-      /*don't just draw one pixel but rather an entire rectangle*/
-      
-      /*add_block(dx,dy,main_font.char_width*scale,main_font.char_height*scale);*/
-      
-      ty2=dy+scale;
-      
-      /*beginning of rectangle*/      
-      ty=dy;
-      while(ty<ty2)
-      {
-       tx=dx;
-       tx2=dx+scale;
-       while(tx<tx2)
-       {
-        /*dsp[tx+ty*width]=0xFF;*/
-        tx++;
-       }
-       ty++;
-      }
-      /*end of rectangle*/
-      
-      
+      /*If pixel in source is nonzero, add a block to my game for that pixel according to the scale*/
+      add_block(dx,dy,scale,scale);
      }
-     
-     
      sx++;
      dx+=scale;
-     
     }
-    
     sy++;
     dy+=scale;
-    
-
    }
-
-
    /*End of really complicated section*/
 
    cx+=main_font.char_width*scale;
@@ -506,7 +474,5 @@ void chaste_font_draw_string_pixels_scaled_add_boxes(char *s,int cx,int cy,int s
  }
 
  SDL_UnlockSurface(main_font.surface);
- SDL_UnlockSurface(surface);
- 
 }
 

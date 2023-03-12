@@ -269,7 +269,7 @@ void boxgame_level_2()
 */
 void boxgame_level_3()
 {
- level_2_rectangles();
+
 
  main_font=font_pico8;
  text_scale=16;
@@ -280,7 +280,8 @@ void boxgame_level_3()
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
-
+ level_2_rectangles();
+ chaste_font_draw_string_pixels_scaled_add_boxes("Chaste the Rainbow",main_font.char_width*10,main_font.char_height*50,16);
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -303,6 +304,8 @@ void boxgame_level_3()
   
   /*chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);*/
   
+  draw_blocks(); /*draw walls*/
+  
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_pixels_scaled_rainbow("Chaste the Rainbow",main_font.char_width*10,main_font.char_height*50,16);
 
@@ -314,7 +317,7 @@ void boxgame_level_3()
  
   player_update();
   
-  draw_blocks(); /*draw walls*/
+
     
   SDL_FillRect(surface,&player.rect,player.color);
   
@@ -418,8 +421,7 @@ void level_5_rectangles()
  
  add_block(rectsize*0,height-rectsize*1,rectsize*80,rectsize*1);
 
- sprintf(text,"L");
- chaste_font_draw_string_pixels_scaled_add_boxes(text,main_font.char_width*8,main_font.char_height*8,16);
+
 
 }
 
@@ -431,7 +433,6 @@ void level_5_rectangles()
 */
 void boxgame_level_5()
 {
- level_5_rectangles();
 
  main_font=font_pico8;
  text_scale=16;
@@ -442,7 +443,10 @@ void boxgame_level_5()
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
+  level_5_rectangles();
 
+  sprintf(text,"You can jump\non this text!");
+  chaste_font_draw_string_pixels_scaled_add_boxes(text,main_font.char_width*32,main_font.char_height*64,16);
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -457,6 +461,8 @@ void boxgame_level_5()
 
   sprintf(text,"Level %d",game_level);
   chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
+  
+
 
 
   chaste_palette_index1++;
