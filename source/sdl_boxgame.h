@@ -64,10 +64,15 @@ void boxgame_title()
  /*chaste_font_draw_string(text,text_x,main_font.char_height*1);*/
  chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);
 
-  sprintf(text,"The game where everything is a rectangle!");
+ sprintf(text,"The game where everything is a rectangle!");
  chaste_font_draw_string_scaled(text,text_x,3*main_font.char_height*text_scale,4);
-   sprintf(text,"Press enter key to begin!");
+ sprintf(text,"Press enter key to begin!");
  chaste_font_draw_string_scaled(text,text_x,4*main_font.char_height*text_scale,4);
+ 
+ chaste_font_draw_string_scaled_color("Party",text_x,main_font.char_height*80,4,0xFF0000);
+ chaste_font_draw_string_scaled_color("on",text_x+main_font.char_width*30,main_font.char_height*80,4,0x00FF00);
+ chaste_font_draw_string_scaled_color("dudes!",text_x+main_font.char_width*50,main_font.char_height*80,4,0x0000FF);
+
 
  SDL_UpdateWindowSurface(window); /*update the screen*/
 

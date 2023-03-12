@@ -60,12 +60,12 @@ int main(int argc, char* args[])
  /*chaste_palette_make(12);*/
  chaste_palette_view();
 
- game_level=1;
+ game_level=0;
  if(game_level==0){boxgame_title();}
  
  player_init(); /*must init player before starting levels*/
 
- game_level=6; /*level to start on. this makes for easier testing of my levels*/
+ game_level=1; /*level to start on. this makes for easier testing of my levels*/
 
  while(game_level!=0)
  {
