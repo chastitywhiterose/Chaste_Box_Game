@@ -30,9 +30,21 @@ int text_scale; /*the current scale of the text used in some functions*/
 #include "sdl_input.h"
 #include "sdl_boxgame.h"
 
+#include "sdl_chaste_box_game_music.h"
+
+
+int songs=3,song_index=0;
+char *music_files[]=
+{
+ "music/Pokemon_Silver_Version_Lucky_Coin_OC_ReMix.mp3",
+ "music/Sonic_the_Hedgehog_3_Ice_Cap_Zone_(Pulse_Mix)_OC_ReMix.mp3",
+ "music/Castlevania_Harmony_of_Dissonance_Swingin'_with_Death_OC_ReMix.mp3"
+};
 
 int main(int argc, char* args[])
 {
+ audio_init(); /*get the audio device ready*/
+
 
  if(SDL_Init(SDL_INIT_VIDEO)){printf( "SDL could not initialize! SDL_Error: %s\n",SDL_GetError());return -1;}
  window=SDL_CreateWindow( "SDL Chaste Font",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_SHOWN );
@@ -58,7 +70,7 @@ int main(int argc, char* args[])
  /*load the rainbow colors!*/
  chaste_palette_rainbow(255);
  /*chaste_palette_make(12);*/
- chaste_palette_view();
+ /*chaste_palette_view();*/
 
  game_level=0;
  if(game_level==0){boxgame_title();}
@@ -66,6 +78,10 @@ int main(int argc, char* args[])
  player_init(); /*must init player before starting levels*/
 
  game_level=1; /*level to start on. this makes for easier testing of my levels*/
+ 
+
+ audio_play(music_files[song_index]); /*start playing music just before the game starts*/
+
 
  while(game_level!=0)
  {

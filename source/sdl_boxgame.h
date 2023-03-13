@@ -208,7 +208,7 @@ void boxgame_level_2()
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
-
+ chaste_font_draw_string_pixels_scaled_add_boxes("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,16);
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -232,6 +232,8 @@ void boxgame_level_2()
   
   /*chaste_font_draw_string_pixels("Chastity White Rose",main_font.char_width*50,main_font.char_height*100);*/
   
+  draw_blocks(); /*draw walls*/
+  
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_pixels_scaled_rainbow("Chastity White Rose",main_font.char_width*10,main_font.char_height*50,16);
 
@@ -242,14 +244,11 @@ void boxgame_level_2()
   }
  
   player_update();
-  
-  draw_blocks(); /*draw walls*/
-    
+      
   SDL_FillRect(surface,&player.rect,player.color);
   
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
-
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
