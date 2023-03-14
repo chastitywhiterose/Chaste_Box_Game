@@ -6,7 +6,7 @@ void keyboard()
 {
  int key;
  SDL_PollEvent( &e );
-  if( e.type == SDL_QUIT ){loop=0; printf("X clicked! This program will close!\n");}
+ if( e.type == SDL_QUIT ){loop=0; printf("X clicked! This program will close!\n");}
   
   
   /*check key down events*/
@@ -48,9 +48,25 @@ void keyboard()
       player_jumps--;
      }
     break;
+    
+    /*music control*/
+    case SDLK_m:
+    if(Mix_Playing(0))
+    {
+     chaste_audio_stop(); /*stop the music playing if it currently is playing*/
+    }
+    else
+    {
+     chaste_audio_play(music[song_index]); /*start the music at the current song index*/
+    }
+    break;
+    
+    
    }
-   
   }
+  
+  
+
   
   
   /*check key releases next*/

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL.h>
+#include <SDL_mixer.h>
 
 /*
 most variables in the program are global. Unless I create temporary variables in other functions.
@@ -23,25 +24,27 @@ char movetext[256],move_id;
 int text_x; /*the x position of where text will go*/
 int text_scale; /*the current scale of the text used in some functions*/
 
+/*music variables section*/
+int songs=3,song_index=0,music_is_on=0;
+char *music_files[]=
+{
+ "music/Castlevania_Harmony_of_Dissonance_Swingin'_with_Death_OC_ReMix.mp3",
+ "music/Pokemon_Silver_Version_Lucky_Coin_OC_ReMix.mp3",
+ "music/Sonic_the_Hedgehog_3_Ice_Cap_Zone_(Pulse_Mix)_OC_ReMix.mp3"
+};
+
+Mix_Chunk *music[3]; /*chunks the music is loaded into*/
+
+
 #include "sdl_chastefont.h"
+#include "sdl_chaste_box_game_music.h"
 #include "chaste_the_rainbow.h"
 #include "sdl_boxes.h"
 #include "sdl_boxgame_player.h"
 #include "sdl_input.h"
 #include "sdl_boxgame.h"
 
-#include "sdl_chaste_box_game_music.h"
 
-
-int songs=3,song_index=0;
-char *music_files[]=
-{
- "music/Pokemon_Silver_Version_Lucky_Coin_OC_ReMix.mp3",
- "music/Sonic_the_Hedgehog_3_Ice_Cap_Zone_(Pulse_Mix)_OC_ReMix.mp3",
- "music/Castlevania_Harmony_of_Dissonance_Swingin'_with_Death_OC_ReMix.mp3"
-};
-
-Mix_Chunk *music[3];
 
 int main(int argc, char* args[])
 {
@@ -49,6 +52,7 @@ int main(int argc, char* args[])
 
  chaste_audio_init(); /*get the audio device ready*/
  
+ /*load all songs*/
  i=0;
  while(i<songs)
  {
@@ -92,7 +96,8 @@ int main(int argc, char* args[])
  
 
  /*audio_play(music_files[song_index]);*/ /*start playing music just before the game starts*/
- chaste_audio_play(music[0]);
+ song_index=0;
+ chaste_audio_play(music[song_index]);
 
 
  while(game_level!=0)
@@ -104,24 +109,44 @@ int main(int argc, char* args[])
   else if(game_level==5){boxgame_level_5();}
   else if(game_level==6){boxgame_level_6();}
   else {break;}
+  
+  if(!Mix_Playing(0)) /*if music is no longer playing*/
+  {
+   song_index=(song_index+1)%songs; /*go to next song*/
+   chaste_audio_play(music[song_index]); /*start the music at the current song index*/
+  }
+
  }
 
  SDL_FreeSurface(font_pico8.surface);
  SDL_FreeSurface(font_8.surface);
 
  SDL_DestroyWindow(window);
+ 
+ 
+ /*unload and free the music*/
+ i=0;
+ while(i<songs)
+ {
+  if(music[i]!=NULL)
+  {
+   Mix_FreeChunk(music[i]);
+   music[i]=NULL;
+  }
+  i++;
+ }
+ 
+  if (audio_open)
+  {
+   Mix_CloseAudio();
+   audio_open = 0;
+  }
+  /*end of music closing section*/
+ 
  SDL_Quit();
 
  return 0;
 }
-
-
-
-
-
-
-
-
 
 
 

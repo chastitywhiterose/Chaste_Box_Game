@@ -9,10 +9,19 @@ Is exceptionally helpful for documentation since it is lacking on the website.
 
 */
 
-#include <SDL_mixer.h>
+
 
 int audio_open = 0;
 Mix_Chunk *wave = NULL;
+
+int audio_rate;
+Uint16 audio_format;
+int audio_channels;
+int loops = 0;
+int i;
+int reverse_stereo = 0;
+int reverse_sample = 0;
+
 
 
 static void CleanUp(int exitcode)
@@ -30,13 +39,6 @@ static void CleanUp(int exitcode)
     exit(exitcode);
 }
 
- int audio_rate;
-    Uint16 audio_format;
-    int audio_channels;
-    int loops = 0;
-    int i;
-    int reverse_stereo = 0;
-    int reverse_sample = 0;
 
 
 
@@ -107,18 +109,21 @@ int chaste_audio_play(Mix_Chunk *music)
  /* Play and then exit */
  Mix_PlayChannel(0,music,loops);
 
- printf("Audio Playback started\n\n");
+ printf("Audio Playback started\n");
  return 0;
 }
 
-int chaste_audio_stop(Mix_Chunk *music)
+int chaste_audio_stop()
 {
  Mix_HaltChannel(0);
- printf("Audio Playback stopped\n\n");
+ printf("Audio Playback stopped\n");
  return 0;
 }
 
-
+int still_playing()
+{
+ return(Mix_Playing(0));
+}
 
 /*
  gcc main.c -o main `sdl2-config --cflags --libs` -lSDL2_mixer
