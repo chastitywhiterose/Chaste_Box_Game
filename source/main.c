@@ -41,9 +41,20 @@ char *music_files[]=
  "music/Castlevania_Harmony_of_Dissonance_Swingin'_with_Death_OC_ReMix.mp3"
 };
 
+Mix_Chunk *music[3];
+
 int main(int argc, char* args[])
 {
- audio_init(); /*get the audio device ready*/
+ int i=0;
+
+ chaste_audio_init(); /*get the audio device ready*/
+ 
+ i=0;
+ while(i<songs)
+ {
+  music[i]=chaste_audio_load(music_files[i]);
+  i++;
+ }
 
 
  if(SDL_Init(SDL_INIT_VIDEO)){printf( "SDL could not initialize! SDL_Error: %s\n",SDL_GetError());return -1;}
@@ -80,7 +91,8 @@ int main(int argc, char* args[])
  game_level=1; /*level to start on. this makes for easier testing of my levels*/
  
 
- audio_play(music_files[song_index]); /*start playing music just before the game starts*/
+ /*audio_play(music_files[song_index]);*/ /*start playing music just before the game starts*/
+ chaste_audio_play(music[0]);
 
 
  while(game_level!=0)

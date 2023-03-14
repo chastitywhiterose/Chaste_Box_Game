@@ -43,7 +43,7 @@ static void CleanUp(int exitcode)
 /*
 this function is meant to return 0 if everything is fine. Nonzero if any error happens.
 */
-int audio_init()
+int chaste_audio_init()
 {
  /* Initialize variables */
  audio_rate = MIX_DEFAULT_FREQUENCY;
@@ -84,27 +84,39 @@ int audio_init()
  return 0;
 }
 
-
-
-
-
-int audio_play(char *filename)
+/*load the audio file and return a Mix_Chunk pointer.*/
+Mix_Chunk *chaste_audio_load(char *filename)
 {
+ Mix_Chunk *new_wave = NULL;
  /* Load the requested wave file */
- wave = Mix_LoadWAV(filename);
- if (wave == NULL) {
-     SDL_Log("Couldn't load %s: %s\n",
-                     filename, SDL_GetError());
-     CleanUp(2);
+ new_wave = Mix_LoadWAV(filename);
+ if (new_wave == NULL)
+ {
+  SDL_Log("Couldn't load %s: %s\n",filename, SDL_GetError());
+  CleanUp(2);
  }
 
- /* Play and then exit */
- Mix_PlayChannel(0, wave, loops);
+ printf("Audio Loading of %s successful\n",filename);
+ return new_wave;
+}
 
- printf("Audio Playback successful\n\n");
+
+
+int chaste_audio_play(Mix_Chunk *music)
+{
+ /* Play and then exit */
+ Mix_PlayChannel(0,music,loops);
+
+ printf("Audio Playback started\n\n");
  return 0;
 }
 
+int chaste_audio_stop(Mix_Chunk *music)
+{
+ Mix_HaltChannel(0);
+ printf("Audio Playback stopped\n\n");
+ return 0;
+}
 
 
 
