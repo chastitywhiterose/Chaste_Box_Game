@@ -684,22 +684,13 @@ void boxgame_level_8()
   
   draw_blocks(); /*draw walls*/
   
-  chaste_palette_index=chaste_palette_index1;
-  
-  sprintf(text,"gcc main.c -o main `sdl2-config --cflags --libs` -lSDL2_mixer -lm");
-  chaste_font_draw_string_pixels_scaled_rainbow(text,main_font.char_width*8,main_font.char_height*8,2);
-  sprintf(text,"./main");
-  chaste_font_draw_string_pixels_scaled_rainbow(text,main_font.char_width*8,main_font.char_height*12,2);
-  
-  chaste_palette_index1++;
-  if(chaste_palette_index1>=chaste_palette_length)
-  {
-   chaste_palette_index1=0;
-  }
-  
-  sprintf(text,"Remember, everything is made of\nlittle squares called pixels!\nIncluding this text!");
-  chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*40,4);
-  
+  sprintf(text,"Here is a pixel ->");
+  chaste_font_draw_string_scaled(text,main_font.char_width*1,main_font.char_height*1,4);
+  chaste_pixel(surface,600,20,0xFFFFFF);
+
+  sprintf(text,"Here is a line ->");
+  chaste_font_draw_string_scaled(text,main_font.char_width*1,main_font.char_height*16,4);
+  chaste_line(surface,600,100,700,200,0xFFFFFF);
     
   SDL_FillRect(surface,&player.rect,player.color);
   
