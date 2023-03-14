@@ -54,7 +54,7 @@ int main(int argc, char* args[])
  
  /*load all songs*/
  i=0;
- while(i<songs)
+ while(i<songs*0)
  {
   music[i]=chaste_audio_load(music_files[i]);
   i++;
@@ -92,7 +92,7 @@ int main(int argc, char* args[])
  
  player_init(); /*must init player before starting levels*/
 
- game_level=1; /*level to start on. this makes for easier testing of my levels*/
+ game_level=8; /*level to start on. this makes for easier testing of my levels*/
  
 
  /*audio_play(music_files[song_index]);*/ /*start playing music just before the game starts*/
@@ -108,6 +108,8 @@ int main(int argc, char* args[])
   else if(game_level==4){boxgame_level_4();}
   else if(game_level==5){boxgame_level_5();}
   else if(game_level==6){boxgame_level_6();}
+  else if(game_level==7){boxgame_level_7();}
+  else if(game_level==8){boxgame_level_8();}
   else {break;}
   
   if(!Mix_Playing(0)) /*if music is no longer playing*/
