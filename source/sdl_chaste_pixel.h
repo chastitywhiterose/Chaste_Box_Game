@@ -12,13 +12,13 @@
  pixel array to keep track of which pixels I have drawn with my function
  It is char type because it uses only values of 0 or 1.
 */
-char pixels[0x1000000];
+/*char pixels[0x1000000];*/
 
 void chaste_pixel(SDL_Surface *surface,int x,int y,int color)
 {
  Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
  dsp=(Uint32*)surface->pixels; /*set pointer to the pixels of this surface*/
- dsp[x+y*width]=color;
+ dsp[x+y*surface->w]=color;
 }
 
 
@@ -46,4 +46,110 @@ void chaste_line(SDL_Surface *surface,int x0,int y0,int x1,int y1,int color)
  }
 }
 
+
+
+
+/*
+ function to arbitrarily draw any triangle, not just the regular ones
+*/
+void chaste_trigon(SDL_Surface *surface,int x0,int y0,int x1,int y1,int x2,int y2,int color)
+{
+ chaste_line(surface,x0,y0,x1,y1,color);
+ chaste_line(surface,x1,y1,x2,y2,color);
+ chaste_line(surface,x2,y2,x0,y0,color);
+}
+
+
+
+/*
+ function to draw any triangle, but also draw corner to midpoint of lines
+*/
+void chaste_trigon_mid(SDL_Surface *surface,int x0,int y0,int x1,int y1,int x2,int y2,int color)
+{
+ int mx,my;
+ 
+
+ chaste_line(surface,x0,y0,x1,y1,color); /*line 0*/
+ 
+ mx=(x0+x1)/2;
+ my=(y0+y1)/2;
+ chaste_line(surface,mx,my,x2,y2,color); /*midpoint of line 0 to point 2*/
+ 
+ 
+ chaste_line(surface,x1,y1,x2,y2,color); /*line 1*/
+ 
+ mx=(x1+x2)/2;
+ my=(y1+y2)/2;
+ chaste_line(surface,mx,my,x0,y0,color); /*midpoint of line 1 to point 0*/
+ 
+ chaste_line(surface,x2,y2,x0,y0,color); /*line 2*/
+ 
+ mx=(x2+x0)/2;
+ my=(y2+y0)/2;
+ chaste_line(surface,mx,my,x1,y1,color); /*midpoint of line 2 to point 1*/
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ The flood fill algorithm is complex. I got the basic layout from here:
+ https://rosettacode.org/wiki/Bitmap/Flood_fill#C
+*/
+
+/*
+my flood fill algorithm for this project does not take a color argument because it is using assumed values of 0 and 1 just like my scan_fill function earlier in this file.
+*/
+
+int oldColor=0,newColor=0xFFFFFF;
+
+void chaste_flood_fill(SDL_Surface *surface,int x,int y)
+{
+ Uint32 *dsp;
+ dsp=(Uint32*)surface->pixels;
+ if ( 0 <= x && x < width &&   0 <= y && y < height 
+ &&   dsp[x+y*surface->w] == oldColor )
+ {
+  dsp[x+y*surface->w]=newColor;
+
+  chaste_flood_fill(surface,x-1,y); 
+  chaste_flood_fill(surface,x+1,y);
+  chaste_flood_fill(surface,x,y-1); 
+  chaste_flood_fill(surface,x,y+1);
+ }
+}
+
+
+
+
+/*find approximate center of a triangle and then fill from that spot*/
+void chaste_trigon_fill(SDL_Surface *surface,int x0,int y0,int x1,int y1,int x2,int y2,int color)
+{
+ int mx,my,mx1,my1;
+ 
+
+ chaste_line(surface,x0,y0,x1,y1,color); /*line 0*/
+ chaste_line(surface,x1,y1,x2,y2,color); /*line 1*/
+ chaste_line(surface,x2,y2,x0,y0,color); /*line 2*/
+ 
+ mx=(x0+x1)/2;
+ my=(y0+y1)/2;
+ mx1=(mx+x2)/2;
+ my1=(my+y2)/2;
+ 
+ newColor=color; /*set global newcolor instead of passing it as an argument to the flood fill function*/
+ chaste_flood_fill(surface,mx1,my1);
+}
 

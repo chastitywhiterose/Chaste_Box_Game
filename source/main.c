@@ -88,7 +88,7 @@ int main(int argc, char* args[])
  /*chaste_palette_make(12);*/
  /*chaste_palette_view();*/
 
- game_level=0;
+ game_level=1;
  if(game_level==0){boxgame_title();}
  
  player_init(); /*must init player before starting levels*/

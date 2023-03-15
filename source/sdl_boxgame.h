@@ -691,6 +691,11 @@ void boxgame_level_8()
   sprintf(text,"Here is a line ->");
   chaste_font_draw_string_scaled(text,main_font.char_width*1,main_font.char_height*16,4);
   chaste_line(surface,600,100,700,200,0xFFFFFF);
+  
+  sprintf(text,"Here is a triangle ->");
+  chaste_font_draw_string_scaled(text,main_font.char_width*1,main_font.char_height*36,4);
+
+  chaste_trigon_fill(surface,700,350,800,350,750,250,0xFFFFFF);
     
   SDL_FillRect(surface,&player.rect,player.color);
   
