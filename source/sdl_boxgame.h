@@ -663,19 +663,12 @@ void boxgame_level_8()
 
  level_5_rectangles();
 
- sprintf(text,"Rainbow\nPro Life\nAlliance");
- /*chaste_font_draw_string_pixels_scaled_add_boxes(text,main_font.char_width*64,main_font.char_height*8,24);*/
-  
- sprintf(text,"LGBTQ+ Rights Start at Conception");
- chaste_font_draw_string_pixels_scaled_add_boxes(text,main_font.char_width*16,main_font.char_height*96,8);
- 
  init_polygon();
  main_polygon.sides=5;
  main_polygon.step=2;
-main_polygon.cx=200;
-main_polygon.cy=500;
-main_polygon.radius=50;
-
+ main_polygon.cx=200;
+ main_polygon.cy=500;
+ main_polygon.radius=50;
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -733,3 +726,6 @@ main_polygon.radius=50;
  }
 
 }
+
+
+

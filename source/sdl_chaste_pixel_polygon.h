@@ -118,22 +118,30 @@ void chaste_polygon_draw_star()
  It is meant to draw a series of triangles and then fill them to form a perfectly filled regular polygon.
  However this means that a temporary surface would need to be drawn on and then blitted to the destination.
  It would be very slow even if I did finish it. But maybe I will figure it out somehow someday.
+ 
+ EDIT: it works but it is really slow!
 */
 void chaste_polygon_draw_star_filled()
 {
  int i,i1;
  chaste_polygon_points();
-  
+ 
  i=0;
  while(i<main_polygon.sides)
  {
   i1=(i+main_polygon.step)%main_polygon.sides;
   
-   chaste_trigon_fill(surface,
+  SDL_FillRect(surface_temp,NULL,0x000000);/*erase temp surface*/
+  
+  /*draw a filled triangle to the temporary surface*/
+   chaste_trigon_fill(surface_temp,
    polygon_xpoints[i],polygon_ypoints[i],
    polygon_xpoints[i1],polygon_ypoints[i1],
    main_polygon.cx,main_polygon.cy,
    main_polygon.color);
+   
+   /*blit temp surface to screen*/
+   SDL_BlitSurface(surface_temp,NULL,surface,NULL);
  
   i++;
  }

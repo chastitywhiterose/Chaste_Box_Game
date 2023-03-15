@@ -57,7 +57,7 @@ int main(int argc, char* args[])
  
  /*load all songs*/
  i=0;
- while(i<songs*0)
+ while(i<songs)
  {
   music[i]=chaste_audio_load(music_files[i]);
   i++;
@@ -69,7 +69,11 @@ int main(int argc, char* args[])
  if(window==NULL){printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );return -1;}
 
  /*set up the screen*/
- surface = SDL_GetWindowSurface( window );
+ surface = SDL_GetWindowSurface(window);
+ 
+ /*create temporary surface that may be used for polygons at some point*/
+ surface_temp=SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
+ SDL_SetColorKey(surface_temp,SDL_TRUE,0x000000); /*black will be used as transparent in blits*/
 
  SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0x80,0x80,0x80));
  SDL_UpdateWindowSurface(window);
@@ -90,14 +94,13 @@ int main(int argc, char* args[])
  /*chaste_palette_make(12);*/
  /*chaste_palette_view();*/
 
- game_level=1;
+ game_level=0;
  if(game_level==0){boxgame_title();}
  
  player_init(); /*must init player before starting levels*/
 
- game_level=8; /*level to start on. this makes for easier testing of my levels*/
+ game_level=1; /*level to start on. this makes for easier testing of my levels*/
  
-
  /*audio_play(music_files[song_index]);*/ /*start playing music just before the game starts*/
  song_index=0;
  chaste_audio_play(music[song_index]);
