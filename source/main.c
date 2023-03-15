@@ -10,6 +10,7 @@ int width=1280,height=720;
 int loop=1;
 SDL_Window *window = NULL;
 SDL_Surface *surface;
+SDL_Surface *surface_temp; /*possible temporary surface that may be used*/
 SDL_Event e;
 SDL_Rect rect;
 
@@ -40,6 +41,7 @@ Mix_Chunk *music[3]; /*chunks the music is loaded into*/
 #include "sdl_chaste_box_game_music.h"
 #include "chaste_the_rainbow.h"
 #include "sdl_chaste_pixel.h"
+#include "sdl_chaste_pixel_polygon.h"
 #include "sdl_boxes.h"
 #include "sdl_boxgame_player.h"
 #include "sdl_input.h"

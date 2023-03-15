@@ -669,6 +669,14 @@ void boxgame_level_8()
  sprintf(text,"LGBTQ+ Rights Start at Conception");
  chaste_font_draw_string_pixels_scaled_add_boxes(text,main_font.char_width*16,main_font.char_height*96,8);
  
+ init_polygon();
+ main_polygon.sides=5;
+ main_polygon.step=2;
+main_polygon.cx=200;
+main_polygon.cy=500;
+main_polygon.radius=50;
+
+ 
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
@@ -694,8 +702,19 @@ void boxgame_level_8()
   
   sprintf(text,"Here is a triangle ->");
   chaste_font_draw_string_scaled(text,main_font.char_width*1,main_font.char_height*36,4);
-
   chaste_trigon_fill(surface,700,350,800,350,750,250,0xFFFFFF);
+
+
+  main_polygon.cx=300;
+  chaste_polygon_draw();
+  
+  main_polygon.cx=500;
+  chaste_polygon_draw_star();
+  
+  main_polygon.cx=700;
+  chaste_polygon_draw_star_filled();
+  
+  
     
   SDL_FillRect(surface,&player.rect,player.color);
   
