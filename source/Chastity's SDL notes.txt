@@ -55,3 +55,36 @@ And with all that work, my development environment for C with SDL on Windows is 
 Also, this DOS/Windows command line guide is super helpful when learning how to use variables in scripts.
 
 http://steve-jansen.github.io/guides/windows-batch-scripting/part-2-variables.html
+
+
+------
+Update:
+
+I downloaded "SDL2_mixer-devel-2.6.3-mingw.zip" because I my third game uses SDL2_mixer for audio.
+
+I copied all the files from "x86_64-w64-mingw32" into the folder of the same name so that they would be in the same place as the development files already there. Then I added the "-lSDL2_mixer" flag to my compile command.
+
+Now my compile script looks like this:
+
+SET COMPILER_PATH=C:\mingw64\bin
+SET SDL_PATH=C:\SDL\SDL2-2.26.3\x86_64-w64-mingw32
+SET PATH=%COMPILER_PATH%;%SDL_PATH%\bin
+
+gcc -Wall -ansi -pedantic main.c -o main -I%SDL_PATH%\include\SDL2 -L%SDL_PATH%\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -mwindows && main
+
+It compiles fine but does not run without these files
+
+SDL2.dll
+SDL2_mixer.dll
+
+Plus these dependencies fo SDL2_mixer
+
+libmpg123-0.dll
+libogg-0.dll
+libopus-0.dll
+libopusfile-0.dll
+
+But since I already had all these files in my msys2 installation. I copied them over.
+So the result is that I now have a batch file that I can double click and it will automatically compile and run the Windows version of the game without having to boot msys2 even though my msys2 installation was required to obtain the dependencies of SDL2_mixer.
+
+This makes publishing new Windows versions of any SDL game I produce faster. I still do all development on Linux though.
