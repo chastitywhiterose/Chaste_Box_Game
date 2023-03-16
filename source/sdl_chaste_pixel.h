@@ -153,3 +153,57 @@ void chaste_trigon_fill(SDL_Surface *surface,int x0,int y0,int x1,int y1,int x2,
  chaste_flood_fill(surface,mx1,my1);
 }
 
+
+
+
+
+
+
+
+/*
+scan fill an area. Works for only certain shapes including triangles
+It finds nonzero pixels and then assumes they are the edge
+
+*/
+void chaste_scan_fill(SDL_Surface *surface,int color)
+{
+ int x,y,x1;
+ Uint32 *dsp; /*dsp is short for Destination Surface Pointer*/
+ dsp=(Uint32*)surface->pixels; /*set pointer to the pixels of this surface*/
+ 
+ y=0;
+ while(y<height)
+ {
+  x=0;
+  while(x<width)
+  {
+   /*pixels[x+y*width]=0;*/
+   if(dsp[x+y*surface->w]!=0) /*find left edge*/
+   {
+    /*printf("found left edge at x=%d,y=%d\n",x,y);*/
+    
+     x1=width;
+     while(x1>0)
+     {
+      x1-=1;
+      if(dsp[x1+y*surface->w]!=0){break;} /*find right edge*/
+     }
+     
+     while(x<x1) /*fill space between the two on this line*/
+     {
+      dsp[x+y*surface->w]=color;
+      x+=1;
+     }
+    
+   }
+   
+   x+=1;
+  }
+ 
+  y+=1;
+ }
+ 
+}
+
+
+

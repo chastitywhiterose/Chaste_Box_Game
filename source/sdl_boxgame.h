@@ -670,6 +670,8 @@ void boxgame_level_8()
  main_polygon.cy=500;
  main_polygon.radius=50;
  
+  main_polygon.color=0xFF00;
+ 
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
@@ -702,10 +704,84 @@ void boxgame_level_8()
   chaste_polygon_draw();
   
   main_polygon.cx=500;
-  chaste_polygon_draw_star();
+  chaste_polygon_draw_fill();
   
   main_polygon.cx=700;
-  chaste_polygon_draw_star_filled();
+  chaste_polygon_draw_star();
+  
+  
+    
+  SDL_FillRect(surface,&player.rect,player.color);
+  
+  SDL_UpdateWindowSurface(window); /*update the screen*/
+  
+
+  keyboard();
+  
+  /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
+  while(time<time1)
+  {
+   time=SDL_GetTicks();
+   /*time=time1;*/
+  }
+  
+ }
+
+}
+
+
+
+
+
+
+
+
+
+void boxgame_level_9()
+{
+
+ main_font=font_8;
+ text_scale=16;
+ text_x=2*main_font.char_width*text_scale;
+ 
+ delay=1000/fps;
+ 
+ 
+ wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
+
+ level_5_rectangles();
+
+ init_polygon();
+ main_polygon.sides=5;
+ main_polygon.step=1;
+ main_polygon.cx=200;
+ main_polygon.cy=500;
+ main_polygon.radius=300;
+ main_polygon.color=0xFF0000;
+ 
+ main_polygon.cx=640;
+ main_polygon.cy=360;
+
+ 
+ loop=1;
+ while(loop) /*the beginning of the game loop*/
+ {
+  time = SDL_GetTicks();
+  time1 = time+delay;
+  
+  SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
+  
+  /*chaste_checker();*/
+ 
+
+  player_update();
+  
+  draw_blocks(); /*draw walls*/
+  
+  sprintf(text,"This is a big star!");
+  chaste_font_draw_string_scaled(text,main_font.char_width*20,main_font.char_height*1,4);
+  
+  chaste_polygon_draw_star_filled_fast();
   
   
     

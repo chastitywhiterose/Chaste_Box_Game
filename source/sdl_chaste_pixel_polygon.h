@@ -69,7 +69,7 @@ void chaste_polygon_points()
  }
 }
 
-
+/*draw regular polygon ignoring the step variable*/
 void chaste_polygon_draw()
 {
  int i,i1;
@@ -82,14 +82,32 @@ void chaste_polygon_draw()
   chaste_line(surface,polygon_xpoints[i],polygon_ypoints[i],polygon_xpoints[i1],polygon_ypoints[i1], main_polygon.color);
   i++;
  }
- 
- chaste_flood_fill(surface,main_polygon.cx,main_polygon.cy);
- 
 }
 
 
 
 
+/*draw regular polygon ignoring the step variable. Fill afterwards with flood fill.*/
+void chaste_polygon_draw_fill()
+{
+ int i,i1;
+ chaste_polygon_points();
+ 
+ i=0;
+ while(i<main_polygon.sides)
+ {
+  i1=(i+1)%main_polygon.sides;
+  chaste_line(surface,polygon_xpoints[i],polygon_ypoints[i],polygon_xpoints[i1],polygon_ypoints[i1], main_polygon.color);
+  i++;
+ }
+ 
+ newColor=main_polygon.color; /*set global newcolor instead of passing it as an argument to the flood fill function*/
+ chaste_flood_fill(surface,main_polygon.cx,main_polygon.cy);
+ 
+}
+
+
+/*draw star polygon by making use of step variable*/
 void chaste_polygon_draw_star()
 {
  int i,i1;
@@ -102,10 +120,6 @@ void chaste_polygon_draw_star()
   chaste_line(surface,polygon_xpoints[i],polygon_ypoints[i],polygon_xpoints[i1],polygon_ypoints[i1], main_polygon.color);
   i++;
  }
- 
- /*after all lines are drawn, optionally flood fill*/
- /*chaste_flood_fill(surface,main_polygon.cx,main_polygon.cy);*/
- 
 }
 
 
@@ -121,7 +135,7 @@ void chaste_polygon_draw_star()
  
  EDIT: it works but it is really slow!
 */
-void chaste_polygon_draw_star_filled()
+void chaste_polygon_draw_star_filled_slow()
 {
  int i,i1;
  chaste_polygon_points();
@@ -143,6 +157,29 @@ void chaste_polygon_draw_star_filled()
    /*blit temp surface to screen*/
    SDL_BlitSurface(surface_temp,NULL,surface,NULL);
  
+  i++;
+ }
+ 
+ 
+}
+
+
+
+
+
+/*
+An attempt to fill a star polygon faster
+*/
+void chaste_polygon_draw_star_filled_fast()
+{
+ int i,i1;
+ chaste_polygon_points();
+ 
+ i=0;
+ while(i<main_polygon.sides)
+ {
+  i1=(i+main_polygon.step)%main_polygon.sides;
+  chaste_line(surface,polygon_xpoints[i],polygon_ypoints[i],polygon_xpoints[i1],polygon_ypoints[i1], main_polygon.color);
   i++;
  }
  

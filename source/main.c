@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <SDL.h>
 #include <SDL_mixer.h>
 
@@ -59,7 +60,7 @@ int main(int argc, char* args[])
  i=0;
  while(i<songs)
  {
-  music[i]=chaste_audio_load(music_files[i]);
+  /*music[i]=chaste_audio_load(music_files[i]);*/
   i++;
  }
 
@@ -74,6 +75,7 @@ int main(int argc, char* args[])
  /*create temporary surface that may be used for polygons at some point*/
  surface_temp=SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
  SDL_SetColorKey(surface_temp,SDL_TRUE,0x000000); /*black will be used as transparent in blits*/
+ SDL_FillRect(surface_temp,NULL,0x000000);/*erase temp surface*/
 
  SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0x80,0x80,0x80));
  SDL_UpdateWindowSurface(window);
@@ -99,12 +101,11 @@ int main(int argc, char* args[])
  
  player_init(); /*must init player before starting levels*/
 
- game_level=1; /*level to start on. this makes for easier testing of my levels*/
- 
  /*audio_play(music_files[song_index]);*/ /*start playing music just before the game starts*/
  song_index=0;
  chaste_audio_play(music[song_index]);
 
+ game_level=9; /*level to start on. this makes for easier testing of my levels*/
 
  while(game_level!=0)
  {
@@ -116,6 +117,7 @@ int main(int argc, char* args[])
   else if(game_level==6){boxgame_level_6();}
   else if(game_level==7){boxgame_level_7();}
   else if(game_level==8){boxgame_level_8();}
+  else if(game_level==9){boxgame_level_9();}
   else {break;}
   
   if(!Mix_Playing(0)) /*if music is no longer playing*/

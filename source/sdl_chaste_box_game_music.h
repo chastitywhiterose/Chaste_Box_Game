@@ -61,7 +61,6 @@ int chaste_audio_init()
      return(1);
     }
  
- 
      /* Open the audio device */
     if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, 4096) < 0) {
         SDL_Log("Couldn't open audio: %s\n", SDL_GetError());
@@ -109,14 +108,14 @@ int chaste_audio_play(Mix_Chunk *music)
  /* Play and then exit */
  Mix_PlayChannel(0,music,loops);
 
- printf("Audio Playback started\n");
+ /*printf("Audio Playback started\n");*/
  return 0;
 }
 
 int chaste_audio_stop()
 {
  Mix_HaltChannel(0);
- printf("Audio Playback stopped\n");
+ /*printf("Audio Playback stopped\n");*/
  return 0;
 }
 
