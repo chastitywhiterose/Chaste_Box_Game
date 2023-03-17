@@ -15,9 +15,10 @@ The website with a lot of info is:
 https://www.mingw-w64.org/
 
 And where I downloaded from was here:
-https://winlibs.com/https://winlibs.com/
+https://winlibs.com/
 
-Specifically the file at the time I got was "winlibs-x86_64-posix-seh-gcc-12.2.0-mingw-w64ucrt-10.0.0-r4".
+Specifically the file at the time I got was 
+"winlibs-x86_64-posix-seh-gcc-12.2.0-mingw-w64ucrt-10.0.0-r4.zip"
 
 So then I put the mingw64 folder in C:\
 
