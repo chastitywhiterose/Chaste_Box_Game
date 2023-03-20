@@ -120,10 +120,9 @@ void chaste_flood_fill(SDL_Surface *surface,int x,int y)
  Uint32 *dsp;
  dsp=(Uint32*)surface->pixels;
  if ( 0 <= x && x < width &&   0 <= y && y < height 
- &&   dsp[x+y*surface->w] == oldColor )
+ &&   dsp[x+y*surface->w] != newColor )
  {
   dsp[x+y*surface->w]=newColor;
-
   chaste_flood_fill(surface,x-1,y); 
   chaste_flood_fill(surface,x+1,y);
   chaste_flood_fill(surface,x,y-1); 
@@ -181,6 +180,7 @@ void chaste_scan_fill(SDL_Surface *surface,int color)
    if(dsp[x+y*surface->w]!=0) /*find left edge*/
    {
     /*printf("found left edge at x=%d,y=%d\n",x,y);*/
+    
     
      x1=width;
      while(x1>0)

@@ -21,7 +21,7 @@ struct polygon
  int step; /*used only in star polygons of 5 or more sides*/
 };
 
-struct polygon main_polygon;
+struct polygon main_polygon,temp_polygon;
 
 void init_polygon()
 {
@@ -180,9 +180,23 @@ void chaste_polygon_draw_star_filled_fast()
  {
   i1=(i+main_polygon.step)%main_polygon.sides;
   chaste_line(surface,polygon_xpoints[i],polygon_ypoints[i],polygon_xpoints[i1],polygon_ypoints[i1], main_polygon.color);
+  
+  if(main_polygon.step>1)
+  {
+   int mx,my; /*midpoint variables*/
+   mx=(polygon_xpoints[i]+polygon_xpoints[i1])/2;
+   my=(polygon_ypoints[i]+polygon_ypoints[i1])/2;
+   
+   chaste_pixel(surface,mx,my,0xFF);
+   
+  }
+  
+
+  
   i++;
  }
  
- 
+  newColor=main_polygon.color; /*set global newcolor instead of passing it as an argument to the flood fill function*/
+  chaste_flood_fill(surface,main_polygon.cx,main_polygon.cy);
 }
 

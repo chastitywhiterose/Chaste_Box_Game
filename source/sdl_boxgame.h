@@ -43,8 +43,26 @@ void chaste_checker()
  }
 }
 
+int fps_current; /*only used when I am debugging the game*/
 
-
+void fps_test()
+{
+ time(&std_time_now);
+ 
+ seconds=std_time_start-std_time_now; /*subtract current time from start time to get seconds since game started*/
+  
+  sprintf(text,"Frame %d",frame);
+  chaste_font_draw_string(text,text_x,main_font.char_height*15);
+  
+  if(seconds!=0)
+  {
+   fps_current=frame/seconds;
+   sprintf(text,"FPS %d",fps_current);
+   chaste_font_draw_string(text,text_x,main_font.char_height*16);
+  }
+ 
+ frame++;
+}
 
 
 
@@ -128,15 +146,15 @@ void boxgame_level_1()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
+
  
  
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -159,16 +177,18 @@ void boxgame_level_1()
     
   SDL_FillRect(surface,&player.rect,player.color);
   
+  
+  
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -202,9 +222,6 @@ void boxgame_level_2()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
- 
-
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
@@ -213,8 +230,8 @@ void boxgame_level_2()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -252,10 +269,10 @@ void boxgame_level_2()
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -279,7 +296,6 @@ void boxgame_level_3()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
  
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
@@ -290,8 +306,8 @@ void boxgame_level_3()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -331,10 +347,10 @@ void boxgame_level_3()
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -357,7 +373,7 @@ void boxgame_level_4()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
+ 
  
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
@@ -367,8 +383,8 @@ void boxgame_level_4()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -378,7 +394,7 @@ void boxgame_level_4()
   sprintf(text,"Level %d",game_level);
   /*chaste_font_draw_string_scaled(text,text_x,1*main_font.char_height*text_scale,text_scale);*/
 
-  sprintf(text,"But most of the time the text will be\nwhite because it is easier to read");
+  sprintf(text,"But most of the sdl_time the text will be\nwhite because it is easier to read");
   chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*48,8);
 
   /*chaste_font_draw_string("Chastity White Rose",main_font.char_width*100,main_font.char_height*100);*/
@@ -406,10 +422,10 @@ void boxgame_level_4()
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -442,7 +458,6 @@ void boxgame_level_5()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
  
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
@@ -455,8 +470,8 @@ void boxgame_level_5()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -487,10 +502,10 @@ void boxgame_level_5()
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -511,7 +526,6 @@ void boxgame_level_6()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
  
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
@@ -527,8 +541,8 @@ void boxgame_level_6()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -565,10 +579,10 @@ void boxgame_level_6()
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -584,7 +598,7 @@ void boxgame_level_7()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
+
  
  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
@@ -600,8 +614,8 @@ void boxgame_level_7()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -637,10 +651,10 @@ void boxgame_level_7()
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -655,10 +669,7 @@ void boxgame_level_8()
  main_font=font_8;
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
- 
- delay=1000/fps;
- 
- 
+  
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
  level_5_rectangles();
@@ -670,13 +681,13 @@ void boxgame_level_8()
  main_polygon.cy=500;
  main_polygon.radius=50;
  
-  main_polygon.color=0xFF00;
+/*  main_polygon.color=0xFF00;*/
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -713,16 +724,18 @@ void boxgame_level_8()
     
   SDL_FillRect(surface,&player.rect,player.color);
   
+
+  
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }
@@ -744,20 +757,17 @@ void boxgame_level_9()
  text_scale=16;
  text_x=2*main_font.char_width*text_scale;
  
- delay=1000/fps;
- 
- 
  wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
 
  level_5_rectangles();
 
  init_polygon();
  main_polygon.sides=5;
- main_polygon.step=1;
+ main_polygon.step=2;
  main_polygon.cx=200;
  main_polygon.cy=500;
- main_polygon.radius=300;
- main_polygon.color=0xFF0000;
+ main_polygon.radius=50;
+ main_polygon.color=0xFFFFFF;
  
  main_polygon.cx=640;
  main_polygon.cy=360;
@@ -766,8 +776,8 @@ void boxgame_level_9()
  loop=1;
  while(loop) /*the beginning of the game loop*/
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
   
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
   
@@ -787,16 +797,18 @@ void boxgame_level_9()
     
   SDL_FillRect(surface,&player.rect,player.color);
   
+    fps_test();
+  
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
   keyboard();
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
-  while(time<time1)
+  while(sdl_time<sdl_time1)
   {
-   time=SDL_GetTicks();
-   /*time=time1;*/
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
   }
   
  }

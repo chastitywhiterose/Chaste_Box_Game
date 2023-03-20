@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include <SDL.h>
 #include <SDL_mixer.h>
 
@@ -19,7 +20,11 @@ int game_level=0;
 
 /*timing variables*/
 int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
-int time,time1;
+int seconds;
+time_t std_time_start,std_time_now; /*for standard library time functions*/
+
+Uint32 sdl_time,sdl_time1; /*for sdl time functions*/
+
 
 char text[0x200];
 char movetext[256],move_id;
@@ -73,7 +78,8 @@ int main(int argc, char* args[])
  surface = SDL_GetWindowSurface(window);
  
  /*create temporary surface that may be used for polygons at some point*/
- surface_temp=SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
+ /*surface_temp=SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);*/
+ surface_temp=SDL_ConvertSurface(surface, surface->format, 0);
  SDL_SetColorKey(surface_temp,SDL_TRUE,0x000000); /*black will be used as transparent in blits*/
  SDL_FillRect(surface_temp,NULL,0x000000);/*erase temp surface*/
 
@@ -90,6 +96,8 @@ int main(int argc, char* args[])
  wall_color=SDL_MapRGB(surface->format,255,255,255);
  
  fps=360; /*change the speed AKA Frames Per Second */
+ delay=1000/fps;
+ delay=0;
  
  /*load the rainbow colors!*/
  chaste_palette_rainbow(255);
@@ -106,6 +114,9 @@ int main(int argc, char* args[])
  chaste_audio_play(music[song_index]);
 
  game_level=9; /*level to start on. this makes for easier testing of my levels*/
+ 
+ /*get time before the game starts using standard library time function*/
+ time(&std_time_start);
 
  while(game_level!=0)
  {
