@@ -207,3 +207,57 @@ void chaste_scan_fill(SDL_Surface *surface,int color)
 
 
 
+
+
+
+
+/*
+Midpoint circle algorithm
+
+Loosely based off of:
+https://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm#C
+
+
+*/
+void chaste_circle(SDL_Surface *surface,int x0,int y0,int radius,int color)
+{
+ int f = 1 - radius;
+ int ddF_x = 0;
+ int ddF_y = -2 * radius;
+ int x = 0;
+ int y = radius;
+
+ chaste_pixel(surface,x0,y0+radius,color);
+ chaste_pixel(surface,x0,y0-radius,color);
+ chaste_pixel(surface,x0+radius,y0,color);
+ chaste_pixel(surface,x0-radius,y0,color);
+
+ while(x < y) 
+ {
+ 
+  if(f >= 0) 
+  {
+   y--;
+   ddF_y += 2;
+   f += ddF_y;
+  }
+  x++;
+  ddF_x += 2;
+  f += ddF_x + 1;    
+
+  chaste_pixel(surface,x0 + x, y0 + y,color);
+  chaste_pixel(surface,x0 - x, y0 + y,color);
+  chaste_pixel(surface,x0 + x, y0 - y,color);
+  chaste_pixel(surface,x0 - x, y0 - y,color);
+  chaste_pixel(surface,x0 + y, y0 + x,color);
+  chaste_pixel(surface,x0 - y, y0 + x,color);
+  chaste_pixel(surface,x0 + y, y0 - x,color);
+  chaste_pixel(surface,x0 - y, y0 - x,color);
+
+ }
+
+}
+
+
+
+

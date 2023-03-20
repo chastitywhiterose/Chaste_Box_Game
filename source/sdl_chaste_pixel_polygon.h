@@ -200,3 +200,24 @@ void chaste_polygon_draw_star_filled_fast()
   chaste_flood_fill(surface,main_polygon.cx,main_polygon.cy);
 }
 
+
+
+
+/*
+Draw regular star polygon at regular size. Then draw smaller but opposite color.
+Then there are proper holes to flood fill the whole shape.
+This is the fastest I have achieve with just regular surfaces.
+*/
+void chaste_polygon_draw_star_filled()
+{
+ chaste_polygon_draw_star();
+ temp_polygon=main_polygon;
+ main_polygon.color^=0xFFFFFF;
+ main_polygon.radius/=2;
+ chaste_polygon_draw_star(); 
+ main_polygon=temp_polygon;
+ 
+ newColor=main_polygon.color;
+ chaste_flood_fill(surface,main_polygon.cx,main_polygon.cy);
+}
+

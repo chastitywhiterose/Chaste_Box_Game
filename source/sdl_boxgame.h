@@ -766,7 +766,7 @@ void boxgame_level_9()
  main_polygon.step=2;
  main_polygon.cx=200;
  main_polygon.cy=500;
- main_polygon.radius=50;
+ main_polygon.radius=300;
  main_polygon.color=0xFFFFFF;
  
  main_polygon.cx=640;
@@ -791,13 +791,13 @@ void boxgame_level_9()
   sprintf(text,"This is a big star!");
   chaste_font_draw_string_scaled(text,main_font.char_width*20,main_font.char_height*1,4);
   
-  chaste_polygon_draw_star_filled_fast();
+  chaste_polygon_draw_star();
   
   
     
   SDL_FillRect(surface,&player.rect,player.color);
   
-    fps_test();
+  /*fps_test();*/
   
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
@@ -815,5 +815,72 @@ void boxgame_level_9()
 
 }
 
+
+
+
+
+
+void boxgame_level_10()
+{
+
+ main_font=font_8;
+ text_scale=16;
+ text_x=2*main_font.char_width*text_scale;
+ 
+ wall_color=SDL_MapRGB(surface->format,255,255,255); /*change color of walls for this level*/
+
+ level_5_rectangles();
+
+ init_polygon();
+ main_polygon.sides=5;
+ main_polygon.step=2;
+ main_polygon.cx=200;
+ main_polygon.cy=500;
+ main_polygon.radius=300;
+ main_polygon.color=0xFFFFFF;
+ 
+ main_polygon.cx=640;
+ main_polygon.cy=360;
+
+ 
+ loop=1;
+ while(loop) /*the beginning of the game loop*/
+ {
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
+  
+  SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
+  
+  /*chaste_checker();*/
+ 
+
+  player_update();
+  
+  draw_blocks(); /*draw walls*/
+  
+  sprintf(text,"This is a big circle!");
+  chaste_font_draw_string_scaled(text,main_font.char_width*20,main_font.char_height*1,4);
+    
+  chaste_circle(surface,main_polygon.cx,main_polygon.cy,main_polygon.radius,main_polygon.color);
+    
+  SDL_FillRect(surface,&player.rect,player.color);
+  
+  /*fps_test();*/
+  
+  SDL_UpdateWindowSurface(window); /*update the screen*/
+  
+
+  keyboard();
+  
+  /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
+  while(sdl_time<sdl_time1)
+  {
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
+  }
+  
+ }
+
+}
 
 
