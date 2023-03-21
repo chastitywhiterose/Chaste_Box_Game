@@ -88,7 +88,7 @@ void chaste_polygon_draw()
 
 
 /*draw regular polygon ignoring the step variable. Fill afterwards with flood fill.*/
-void chaste_polygon_draw_fill()
+void chaste_polygon_draw_filled()
 {
  int i,i1;
  chaste_polygon_points();

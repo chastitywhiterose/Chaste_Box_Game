@@ -119,7 +119,7 @@ int main(int argc, char* args[])
  song_index=0;
  chaste_audio_play(music[song_index]);
 
- game_level=11; /*level to start on. this makes for easier testing of my levels*/
+ game_level=12; /*level to start on. this makes for easier testing of my levels*/
  
  /*get time before the game starts using standard library time function*/
  time(&std_time_start);
@@ -137,6 +137,7 @@ int main(int argc, char* args[])
   else if(game_level==9){boxgame_level_9();}
   else if(game_level==10){boxgame_level_10();}
   else if(game_level==11){boxgame_level_11();}
+  else if(game_level==12){boxgame_level_12();}
   else {break;}
   
   if(!Mix_Playing(0)) /*if music is no longer playing*/

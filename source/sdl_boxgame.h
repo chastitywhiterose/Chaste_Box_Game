@@ -715,7 +715,7 @@ void boxgame_level_8()
   chaste_polygon_draw();
   
   main_polygon.cx=500;
-  chaste_polygon_draw_fill();
+  chaste_polygon_draw_filled();
   
   main_polygon.cx=700;
   chaste_polygon_draw_star();
@@ -910,14 +910,6 @@ void boxgame_level_11()
  main_polygon.cx=640;
  main_polygon.cy=360;
  
- /*my renderer API uses a totally different set of variables for color*/
- main_polygon_rendercolor.r=255;
- main_polygon_rendercolor.g=255;
- main_polygon_rendercolor.b=255;
- main_polygon_rendercolor.a=255;
-
-
- 
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -925,7 +917,7 @@ void boxgame_level_11()
   sdl_time = SDL_GetTicks();
   sdl_time1 = sdl_time+delay;
   
-    SDL_SetRenderDrawColor(renderer,0,0,0,255);
+  SDL_SetRenderDrawColor(renderer,0,0,0,255);
   SDL_RenderClear(renderer);
 
   
@@ -939,8 +931,81 @@ void boxgame_level_11()
   sprintf(text,"This is a spinning star in a circle!");
   chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*1,4);
   
-  chaste_polygon_draw_star1();
-  /*chaste_polygon_draw_star_filled();*/
+  chaste_polygon_draw_star_filled1();
+
+  main_polygon.radians+=PI/180;
+    
+  chaste_circle(surface,main_polygon.cx,main_polygon.cy,main_polygon.radius,main_polygon.color);
+    
+  SDL_FillRect(surface,&player.rect,player.color);
+  
+  /*fps_test();*/
+  
+  SDL_UpdateWindowSurface(window); /*update the screen*/
+  
+
+  keyboard();
+  
+  /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
+  while(sdl_time<sdl_time1)
+  {
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
+  }
+  
+ }
+
+}
+
+
+
+/*
+this level uses a software renderer
+this allows it to use any renderer functions but targetting a surface.
+This means that I can freely mix surface and renderer drawing functions in the same program!
+*/
+void boxgame_level_12()
+{
+
+ main_font=font_8;
+ text_scale=16;
+ text_x=2*main_font.char_width*text_scale;
+ 
+ level_5_rectangles();
+
+ init_polygon();
+ main_polygon.sides=5;
+ main_polygon.step=2;
+ main_polygon.cx=200;
+ main_polygon.cy=500;
+ main_polygon.radius=300;
+ main_polygon.color=0xFFFFFF;
+ 
+ main_polygon.cx=640;
+ main_polygon.cy=360;
+ 
+ loop=1;
+ while(loop) /*the beginning of the game loop*/
+ {
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
+  
+  SDL_SetRenderDrawColor(renderer,0,0,0,255);
+  SDL_RenderClear(renderer);
+
+  
+  /*chaste_checker();*/
+ 
+
+  player_update();
+  
+  draw_blocks(); /*draw walls*/
+  
+  sprintf(text,"This is a spinning star in a circle!");
+  chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*1,4);
+  
+  
+  chaste_polygon_draw_filled1();
 
   main_polygon.radians+=PI/180;
     
