@@ -13,7 +13,7 @@ int loop=1;
 SDL_Window *window = NULL;
 SDL_Surface *surface;
 SDL_Surface *surface_temp; /*possible temporary surface that may be used*/
-SDL_Renderer *renderer;
+SDL_Renderer *renderer; /*renderer used in a few levels for greater speed*/
 SDL_Event e;
 SDL_Rect rect;
 
@@ -76,8 +76,12 @@ int main(int argc, char* args[])
  window=SDL_CreateWindow( "SDL Chaste Box Game",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_SHOWN );
  if(window==NULL){printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );return -1;}
 
- /*set up the screen*/
- surface = SDL_GetWindowSurface(window);
+ /*get the surface of the window that will be drawn to*/
+ surface=SDL_GetWindowSurface(window);
+ 
+ /*create a renderer that can draw to the surface*/
+ renderer=SDL_CreateSoftwareRenderer(surface);
+ if(renderer==NULL){printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError() );return -1;}
  
  /*create temporary surface that may be used for polygons at some point*/
  /*surface_temp=SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);*/
@@ -142,12 +146,16 @@ int main(int argc, char* args[])
   }
 
  }
+ 
+ /*after the game loop has ended, free memory and shut down*/
 
  SDL_FreeSurface(font_pico8.surface);
  SDL_FreeSurface(font_8.surface);
-
- SDL_DestroyWindow(window);
  
+ SDL_FreeSurface(surface_temp);
+
+ SDL_DestroyRenderer(renderer);
+ SDL_DestroyWindow(window);
  
  /*unload and free the music*/
  i=0;

@@ -917,7 +917,7 @@ void boxgame_level_11()
  main_polygon_rendercolor.a=255;
 
 
- renderer=SDL_CreateSoftwareRenderer(surface);
+ 
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
