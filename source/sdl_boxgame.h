@@ -1001,7 +1001,7 @@ void boxgame_level_12()
   
   draw_blocks(); /*draw walls*/
   
-  sprintf(text,"This is a spinning star in a circle!");
+  sprintf(text,"This is a pentagon in a circle!");
   chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*1,4);
   
   
@@ -1010,6 +1010,77 @@ void boxgame_level_12()
   main_polygon.radians+=PI/180;
     
   chaste_circle(surface,main_polygon.cx,main_polygon.cy,main_polygon.radius,main_polygon.color);
+    
+  SDL_FillRect(surface,&player.rect,player.color);
+  
+  /*fps_test();*/
+  
+  SDL_UpdateWindowSurface(window); /*update the screen*/
+  
+
+  keyboard();
+  
+  /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
+  while(sdl_time<sdl_time1)
+  {
+   sdl_time=SDL_GetTicks();
+   /*sdl_time=sdl_time1;*/
+  }
+  
+ }
+
+}
+
+
+
+
+/*
+this level uses a software renderer
+this allows it to use any renderer functions but targetting a surface.
+This means that I can freely mix surface and renderer drawing functions in the same program!
+*/
+void boxgame_level_13()
+{
+
+ main_font=font_8;
+ text_scale=16;
+ text_x=2*main_font.char_width*text_scale;
+ 
+ level_5_rectangles();
+
+ init_circle();
+ main_circle.radius=300;
+ main_circle.slices_max=12;
+ main_circle.slices_use=main_circle.slices_max/2;
+ 
+ loop=1;
+ while(loop) /*the beginning of the game loop*/
+ {
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
+  
+  SDL_SetRenderDrawColor(renderer,128,128,128,255);
+  SDL_RenderClear(renderer);
+
+  
+  /*chaste_checker();*/
+ 
+
+  player_update();
+  
+  draw_blocks(); /*draw walls*/
+  
+  sprintf(text,"This is a pentagon in a circle!");
+  chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*1,4);
+  
+  
+  /*chaste_circle_draw_filled1();*/
+
+ yinyang();
+
+
+  /*main_circle.radians+=PI/180;*/
+    
     
   SDL_FillRect(surface,&player.rect,player.color);
   

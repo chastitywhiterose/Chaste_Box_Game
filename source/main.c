@@ -50,6 +50,7 @@ Mix_Chunk *music[3]; /*chunks the music is loaded into*/
 #include "sdl_chaste_pixel.h"
 #include "sdl_chaste_pixel_polygon.h"
 #include "sdl_chaste_polygon_render.h"
+#include "sdl_chaste_circle_render.h"
 #include "sdl_boxes.h"
 #include "sdl_boxgame_player.h"
 #include "sdl_input.h"
@@ -82,6 +83,13 @@ int main(int argc, char* args[])
  /*create a renderer that can draw to the surface*/
  renderer=SDL_CreateSoftwareRenderer(surface);
  if(renderer==NULL){printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError() );return -1;}
+ 
+ /*
+ if(SDL_RenderSetVSync(renderer, 1))
+ {
+  printf("Vsync failed SDL_Error: %s\n", SDL_GetError() );
+ }
+ */
  
  /*create temporary surface that may be used for polygons at some point*/
  /*surface_temp=SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);*/
@@ -119,7 +127,7 @@ int main(int argc, char* args[])
  song_index=0;
  chaste_audio_play(music[song_index]);
 
- game_level=12; /*level to start on. this makes for easier testing of my levels*/
+ game_level=13; /*level to start on. this makes for easier testing of my levels*/
  
  /*get time before the game starts using standard library time function*/
  time(&std_time_start);
@@ -138,6 +146,7 @@ int main(int argc, char* args[])
   else if(game_level==10){boxgame_level_10();}
   else if(game_level==11){boxgame_level_11();}
   else if(game_level==12){boxgame_level_12();}
+  else if(game_level==13){boxgame_level_13();}
   else {break;}
   
   if(!Mix_Playing(0)) /*if music is no longer playing*/

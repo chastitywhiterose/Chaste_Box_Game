@@ -35,9 +35,12 @@ void chaste_polygon_draw_filled1()
  */
  SDL_GetRGB(main_polygon.color,main_font.surface->format,&temp_color.r,&temp_color.g,&temp_color.b);
  
- vertices[0].color=temp_color;
- vertices[1].color=temp_color;
- vertices[2].color=temp_color;
+ i=0;
+ while(i<3)
+ {
+  vertices[i].color=temp_color;
+  i++;
+ }
  
  i=0;
  while(i<main_polygon.sides)
@@ -80,9 +83,12 @@ void chaste_polygon_draw_star_filled1()
  */
  SDL_GetRGB(main_polygon.color,main_font.surface->format,&temp_color.r,&temp_color.g,&temp_color.b);
  
- vertices[0].color=temp_color;
- vertices[1].color=temp_color;
- vertices[2].color=temp_color;
+ i=0;
+ while(i<3)
+ {
+  vertices[i].color=temp_color;
+  i++;
+ }
  
  i=0;
  while(i<main_polygon.sides)
@@ -99,11 +105,6 @@ void chaste_polygon_draw_star_filled1()
   
   SDL_RenderGeometry(renderer,NULL,vertices,3,NULL,0);
 
-  /*swap colors around to show off*/  
-  temp_color=vertices[0].color;
-  vertices[0].color=vertices[1].color;
-  vertices[1].color=vertices[2].color;
-  vertices[2].color=temp_color;
   i++;
  }
  
