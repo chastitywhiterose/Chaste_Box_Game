@@ -1050,8 +1050,8 @@ void boxgame_level_13()
 
  init_circle();
  main_circle.radius=300;
- main_circle.slices_max=12;
- main_circle.slices_use=main_circle.slices_max/2;
+ main_circle.slices_max=36;
+ 
  
  loop=1;
  while(loop) /*the beginning of the game loop*/
@@ -1070,17 +1070,13 @@ void boxgame_level_13()
   
   draw_blocks(); /*draw walls*/
   
-  sprintf(text,"This is a pentagon in a circle!");
+  sprintf(text,"Yin and Yang");
   chaste_font_draw_string_scaled(text,main_font.char_width*8,main_font.char_height*1,4);
   
   
-  /*chaste_circle_draw_filled1();*/
+  yinyang();
 
- yinyang();
-
-
-  /*main_circle.radians+=PI/180;*/
-    
+  main_circle.radians+=PI/180;
     
   SDL_FillRect(surface,&player.rect,player.color);
   

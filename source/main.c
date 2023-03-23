@@ -68,10 +68,9 @@ int main(int argc, char* args[])
  i=0;
  while(i<songs)
  {
-/*  music[i]=chaste_audio_load(music_files[i]);*/
+  music[i]=chaste_audio_load(music_files[i]);
   i++;
  }
-
 
  if(SDL_Init(SDL_INIT_VIDEO)){printf( "SDL could not initialize! SDL_Error: %s\n",SDL_GetError());return -1;}
  window=SDL_CreateWindow( "SDL Chaste Box Game",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_SHOWN );
@@ -103,6 +102,10 @@ int main(int argc, char* args[])
  /*this game will only load two fonts*/
  font_pico8=chaste_font_load("./font/PICO-8_4x6.bmp");
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
+ 
+ /*black will be used as transparent in blits*/
+ SDL_SetColorKey(font_8.surface,SDL_TRUE,0x000000);
+ SDL_SetColorKey(font_pico8.surface,SDL_TRUE,0x000000);
 
  checker_init(); /*set up initial checkerboard values*/
  player.size=rectsize; /*set same player size as checker grid*/
@@ -127,7 +130,7 @@ int main(int argc, char* args[])
  song_index=0;
  chaste_audio_play(music[song_index]);
 
- game_level=13; /*level to start on. this makes for easier testing of my levels*/
+ game_level=1; /*level to start on. this makes for easier testing of my levels*/
  
  /*get time before the game starts using standard library time function*/
  time(&std_time_start);
