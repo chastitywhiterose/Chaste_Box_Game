@@ -144,7 +144,7 @@ void chaste_circle_draw_parts_filled1()
 
 void yinyang()
 {
- double radius,radians,cx,cy,cx1,cy1,cx2,cy2,angle,cr1,cr2;
+ double radius,radians,cx,cy,cx1,cy1,angle,cr1,cr2;
  
  main_circle.slices_use=main_circle.slices_max/2;
 

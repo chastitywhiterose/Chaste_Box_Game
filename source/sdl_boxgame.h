@@ -182,7 +182,11 @@ void boxgame_level_1()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -266,7 +270,11 @@ void boxgame_level_2()
   
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -344,7 +352,11 @@ void boxgame_level_3()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -419,7 +431,11 @@ void boxgame_level_4()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -499,7 +515,11 @@ void boxgame_level_5()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -576,7 +596,11 @@ void boxgame_level_6()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -648,7 +672,11 @@ void boxgame_level_7()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -729,7 +757,11 @@ void boxgame_level_8()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -802,7 +834,11 @@ void boxgame_level_9()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -870,7 +906,11 @@ void boxgame_level_10()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -943,8 +983,12 @@ void boxgame_level_11()
   
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
-
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
+
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -1018,7 +1062,11 @@ void boxgame_level_12()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
@@ -1085,7 +1133,11 @@ void boxgame_level_13()
   SDL_UpdateWindowSurface(window); /*update the screen*/
   
 
+   /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
   keyboard();
+ }
   
   /*the ULTRA important timing loop. Without it the game is way too fast to see!*/
   while(sdl_time<sdl_time1)
